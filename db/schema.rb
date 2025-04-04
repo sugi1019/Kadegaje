@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_04_005822) do
+ActiveRecord::Schema.define(version: 2025_04_04_012933) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,37 @@ ActiveRecord::Schema.define(version: 2025_04_04_005822) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "review_id", null: false
+    t.text "post_comment", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["review_id"], name: "index_comments_on_review_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "genre", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre"], name: "index_genres_on_genre"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "genre_id", null: false
+    t.string "title", null: false
+    t.integer "rating", null: false
+    t.text "post", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_reviews_on_genre_id"
+    t.index ["rating"], name: "index_reviews_on_rating"
+    t.index ["title"], name: "index_reviews_on_title"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -55,4 +86,8 @@ ActiveRecord::Schema.define(version: 2025_04_04_005822) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "reviews"
+  add_foreign_key "comments", "users"
+  add_foreign_key "reviews", "genres"
+  add_foreign_key "reviews", "users"
 end
