@@ -13,5 +13,6 @@ class Review < ApplicationRecord
             :title,
             :rating,
             :post,
+            :product_name,
             presence: true
 end

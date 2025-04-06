@@ -7,6 +7,7 @@ class CreateReviews < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.integer :rating, null: false
       t.text :post, null: false
+      # 新しくproduct_nameを追加していますschema参照
       t.timestamps
     end    
     # :titleと:ratingにINDEXを追加

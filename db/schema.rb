@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_06_095556) do
+ActiveRecord::Schema.define(version: 2025_04_06_101041) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -65,7 +65,9 @@ ActiveRecord::Schema.define(version: 2025_04_06_095556) do
     t.text "post", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "product_name", null: false
     t.index ["genre_id"], name: "index_reviews_on_genre_id"
+    t.index ["product_name"], name: "index_reviews_on_product_name"
     t.index ["rating"], name: "index_reviews_on_rating"
     t.index ["title"], name: "index_reviews_on_title"
     t.index ["user_id"], name: "index_reviews_on_user_id"

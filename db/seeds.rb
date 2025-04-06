@@ -8,11 +8,13 @@
 
 # テスト用データ
 
+
 # 管理者アカウント情報
 # Admin.create!(
 #   email: "a@a",
 #   password: "123456"
 # )
+
 
 # ユーザー情報1
 User.create!(
@@ -28,6 +30,7 @@ User.create!(
   password: "bbbbbb"
 )
 # user.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge,jpg')),filename: 'hoge.jpg')
+
 
 ジャンル情報
 Genre.create!(name: "キッチン家電・ガジェット")
@@ -51,6 +54,7 @@ Genre.create!(name: "DIY・工具ガジェット")
 Genre.create!(name: "旅行・アウトドアガジェット")
 # genre.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge,jpg')),filename: 'hoge.jpg')
 
+
 # レビュー情報
 Review.create!(
   user_id: 1,
@@ -58,7 +62,7 @@ Review.create!(
   title: "お掃除ロボット買ったよ～",
   rating: 5,#integer ✩5評価
   post: "全自動お掃除ロボット（◯◯バ）一ヶ月使ってみたよ～\n仕事から帰っ来た時に髪の毛1本床に落ちてない環境に大満足!!\nみんなも使ってみてね～"
-  # product_id: "◯◯製xxxx"
+  # product_name: "◯◯製xxxx"
 )
 　　　　　　　　　　　　　　　　　　　　　　　　　# review.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge,jpg')),filename: 'hoge.jpg')
 Review.create!(
@@ -67,8 +71,7 @@ Review.create!(
   title: "お気に入りのキーボード",
   rating: 4,#integer ✩5評価
   post: "おしゃれなキーボード買いました。クリアカラーで写真映えする！\nただ、もう少し音が静かなら良かったかなと思いました。"
-  # product_id: "◯◯製xxxx"
-
+  # product_name: "◯◯製xxxx"
 )
 # review.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge,jpg')),filename: 'hoge.jpg')
 Review.create!(
@@ -77,7 +80,7 @@ Review.create!(
   title: "最高のコーヒープレスを入手した",
   rating: 5,#integer ✩5評価
   post: "僕はコーヒーが好きでほぼ毎日入れるんだけど、いままでは忙しい朝にハンドドリップしてたんだけど流石に時間がなくて...\n時短のために〇〇のコーヒープレス使ってみたら大当たり！片付け簡単でおすすめです！"
-  # product_id: "◯◯製"
+  # product_name: "◯◯製"
 )
 # review.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge,jpg')),filename: 'hoge.jpg')
 
