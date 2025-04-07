@@ -104,7 +104,7 @@ review1 = Review.create!(
   post: "全自動お掃除ロボット（◯◯バ）一ヶ月使ってみたよ～\n仕事から帰っ来た時に髪の毛1本床に落ちてない環境に大満足!!\nみんなも使ってみてね～",
   product_name: "◯◯製xxxx"
 )
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# review1.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge.jpg')),filename: 'hoge.jpg')
+review1.image.attach(io: File.open(Rails.root.join('app/assets/images/review1.jpg')),filename: 'review1.jpg')
 
 # レビュー情報2
 review2 = Review.create!(
@@ -115,7 +115,7 @@ review2 = Review.create!(
   post: "おしゃれなキーボード買いました。クリアカラーで写真映えする！\nただ、もう少し音が静かなら良かったかなと思いました。",
   product_name: "◯◯製xxxx"
 )
-# review2.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge.jpg')),filename: 'hoge.jpg')
+review1.image.attach(io: File.open(Rails.root.join('app/assets/images/review2.jpg')),filename: 'review2.jpg')
 
 # レビュー情報3
 review3 = Review.create!(
@@ -126,10 +126,9 @@ review3 = Review.create!(
   post: "僕はコーヒーが好きでほぼ毎日入れるんだけど、いままでは忙しい朝にハンドドリップしてたんだけど流石に時間がなくて...\n時短のために〇〇のコーヒープレス使ってみたら大当たり！片付け簡単でおすすめです！",
   product_name: "◯◯製"
 )
-# review3.image.attach(io: File.open(Rails.root.join('app/assets/images/hoge.jpg')),filename: 'hoge.jpg')
+review1.image.attach(io: File.open(Rails.root.join('app/assets/images/review3.jpg')),filename: 'review3.jpg')
 
 
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　# comment
 
 #ターミナルに表示されるメッセージ
 puts "adminアカウントの情報です"
