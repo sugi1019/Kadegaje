@@ -1,2 +1,9 @@
 <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p>
+<% if user_signed_in? %>
+  <p>こんにちは、<%= current_user.display_name %>さん！</p>
+  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+<% else %>
+  <p>ログインしていません。</p>
+  <%= link_to "ログイン", new_user_session_path %>
+<% end %>

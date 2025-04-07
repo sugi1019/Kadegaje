@@ -13,3 +13,13 @@
   <li>他者の著作権を尊重し、無断で公式名を名乗ることや、他者のコンテンツを無断転載しないでください。</li>
   <li>レビューはあなた自身の体験に基づいたものを投稿してください。</li>
 </ul>
+
+
+<!-- ログインテスト -->
+<% if user_signed_in? %>
+  <p>こんにちは、<%= current_user.display_name %>さん！</p>
+  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+<% else %>
+  <p>ログインしていません。</p>
+  <%= link_to "ログイン", new_user_session_path %>
+<% end %>
