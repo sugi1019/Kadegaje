@@ -1,9 +1,22 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
-<% if user_signed_in? %>
-  <p>こんにちは、<%= current_user.display_name %>さん！</p>
-  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+<!-- マイページ -->
+<% if @user == current_user %>
+  <h1>マイページ</h1>
+  <% @user.reviews.each do |review| %>
+    <p>タイトル: <%= review.title %></p>
+    <p>✩: <%= review.rating %></p>
+    <p>レビュー: <%= review.post %></p>
+    <p>製品: <%= review.product_name %></p>
+    <p>製品画像: <%= image_tag review.reviews_image.variant(resize: "300x300").processed %></p>
+  <% end %>
+
+<!-- 他ユーザーページ -->
 <% else %>
-  <p>ログインしていません。</p>
-  <%= link_to "ログイン", new_user_session_path %>
+  <h2><%= @user.display_name %>さんの詳細ページ</h2>
+  <% @user.reviews.each do |review| %>
+    <p>タイトル: <%= review.title %></p>
+    <p>✩: <%= review.rating %></p>
+    <p>レビュー: <%= review.post %></p>
+    <p>製品: <%= review.product_name %></p>
+    <p>製品画像: <%= image_tag review.reviews_image.variant(resize: "300x300").processed %></p>
+  <% end %>
 <% end %>

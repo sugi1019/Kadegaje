@@ -115,7 +115,7 @@ review2 = Review.create!(
   post: "おしゃれなキーボード買いました。クリアカラーで写真映えする！\nただ、もう少し音が静かなら良かったかなと思いました。",
   product_name: "◯◯製xxxx"
 )
-review1.reviews_image.attach(io: File.open(Rails.root.join('app/assets/images/review2.jpg')),filename: 'review2.jpg')
+review2.reviews_image.attach(io: File.open(Rails.root.join('app/assets/images/review2.jpg')),filename: 'review2.jpg')
 
 # レビュー情報3
 review3 = Review.create!(
@@ -126,7 +126,7 @@ review3 = Review.create!(
   post: "僕はコーヒーが好きでほぼ毎日入れるんだけど、いままでは忙しい朝にハンドドリップしてたんだけど流石に時間がなくて...\n時短のために〇〇のコーヒープレス使ってみたら大当たり！片付け簡単でおすすめです！",
   product_name: "◯◯製"
 )
-review1.reviews_image.attach(io: File.open(Rails.root.join('app/assets/images/review3.jpg')),filename: 'review3.jpg')
+review3.reviews_image.attach(io: File.open(Rails.root.join('app/assets/images/review3.jpg')),filename: 'review3.jpg')
 
 
 
