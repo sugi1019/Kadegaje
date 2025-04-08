@@ -1,2 +1,21 @@
-<h1>Reviews#index</h1>
-<p>Find me in app/views/reviews/index.html.erb</p>
+<h1>ALLジャンル レビュー</h1>
+
+<!-- 新規レビュー作成へ (ログイン時のみ表示)-->
+<% if user_signed_in? %>
+  <%= link_to "新しいレビューを書く", new_review_path %>
+<% end %>
+
+<% @reviews.each do |review| %>
+    <p>タイトル: 
+      <%= link_to review_path(review.id) do %>
+        <%= review.title %>
+      <% end %>
+    </p>
+    <p>✩: <%= review.rating %></p>
+    <p>製品: <%= review.product_name %></p>
+    <% if review.reviews_image.attached? %>
+      <p>製品画像 <%= image_tag review.reviews_image.variant(resize: "70x70").processed %></p>
+    <% else %>
+      <p>画像がありません… <%= image_tag "no_image_review.jpg", size: "70x70" %></p>
+    <% end %> 
+<% end %>

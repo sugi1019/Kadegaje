@@ -3,6 +3,7 @@ class ReviewsController < ApplicationController
   end
 
   def index
+    @reviews = Review.all
   end
 
   def show

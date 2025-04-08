@@ -24,7 +24,11 @@
 <% else %>
   <h2><%= @user.display_name %>さんの詳細ページ</h2>
   <% @user.reviews.each do |review| %>
-    <p>タイトル: <%= review.title %></p>
+    <p>タイトル: 
+      <%= link_to review_path(review.id) do %>
+        <%= review.title %>
+      <% end %>
+    </p>
     <p>✩: <%= review.rating %></p>
     <p>レビュー: <%= review.post %></p>
     <p>製品: <%= review.product_name %></p>
