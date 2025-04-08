@@ -13,6 +13,9 @@
     <% end %> 
   <% end %>
 
+  <!-- ユーザー情報編集ページへ -->
+  <%= link_to "編集する", edit_user_path(current_user.id) %>
+
 <!-- 他ユーザーページ -->
 <% else %>
   <h2><%= @user.display_name %>さんの詳細ページ</h2>

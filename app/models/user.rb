@@ -11,5 +11,7 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  validates :display_name, presence: true
+  # 表示名は2文字以上必須
+  validates :display_name, presence: true, length: {minimum: 2}
+
 end

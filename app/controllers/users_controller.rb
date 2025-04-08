@@ -1,12 +1,21 @@
 class UsersController < ApplicationController
   def edit
+    @user = current_user
   end
 
   def show
     @user = User.find(params[:id])
   end
 
-  def update
+  def update 
+  @user = current_user
+    if @user.update(user_params)
+      # パスワード変更後に再ログイン bypass: trueでユーザーが再ログインしなくてもログインを維持
+      sign_in(@user, bypass: true)
+      redirect_to user_path(current_user)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -14,4 +23,22 @@ class UsersController < ApplicationController
 
   def confirm_deletion
   end
+
+  private
+  def user_params
+    params.require(:user).permit(
+      :display_name,
+      :email,
+      :password,
+      :password_confirmation
+    ).tap do |blank|
+      # tap do |blank| で更に変更を加える :passwordが空の場合は:passwordを削除
+      # deviseではpasswordが空の時は更新されない
+      if params[:user][:password].blank?
+        blank.delete(:password)
+        blank.delete(:password_confirmation)
+      end
+    end
+  end
+
 end
