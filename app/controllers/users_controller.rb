@@ -36,7 +36,8 @@ class UsersController < ApplicationController
       :display_name,
       :email,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :users_image
     ).tap do |blank|
       # tap do |blank| で更に変更を加える :passwordが空の場合は:passwordを削除
       # deviseではpasswordが空の時は更新されない
