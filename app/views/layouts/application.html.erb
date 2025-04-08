@@ -15,8 +15,8 @@
   <body>
     <%= render 'layouts/header' %>
     <main>
+      <!-- フラッシュメッセージ(成功時) 失敗時はエラー文表示に設定-->
       <%= flash[:notice] %>
-      <%= flash[:alert] %>
       <%= yield %>
     </main>
   </body>

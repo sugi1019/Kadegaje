@@ -8,10 +8,11 @@ class UsersController < ApplicationController
   end
 
   def update 
-  @user = current_user
+    @user = current_user
     if @user.update(user_params)
-      # パスワード変更後に再ログイン bypass: trueでユーザーが再ログインしなくてもログインを維持
+      # パスワード変更後に再ログイン bypass: true でユーザーが再ログインしなくてもログインを維持
       sign_in(@user, bypass: true)
+      flash[:notice] = "更新されました"
       redirect_to user_path(current_user)
     else
       render :edit
@@ -19,12 +20,17 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    current_user.destroy
+    flash[:notice] = "正常に削除されました"
+    redirect_to root_path
   end
 
   def confirm_deletion
+    @user = current_user
   end
 
   private
+
   def user_params
     params.require(:user).permit(
       :display_name,

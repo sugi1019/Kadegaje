@@ -1,5 +1,15 @@
 <h1><%= @user.display_name %>さんのアカウント情報編集ページ</h1>
 
+<!-- エラーメッセージ表示 -->
+<% if @user.errors.any? %>
+  <h2>以下のエラーが発生しました: </h2>
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <!-- ユーザー情報編集フォーム -->
 <%= form_with model: @user, method: :patch do |f| %>
   <label>表示名</label>
@@ -18,13 +28,7 @@
   <%= f.submit "変更を保存する" %>
 <% end %>
 
-
-<!-- エラーメッセージ表示 -->
-<% if @user.errors.any? %>
-  <h2>以下のエラーが発生しました: </h2>
-  <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<!-- マイページに戻る -->
+<%= link_to "マイページへ戻る", user_path(@user.id) %>
+<!-- アカウント削除確認ページlink -->
+<%= link_to "アカウントを削除する", users_confirm_deletion_path %>
