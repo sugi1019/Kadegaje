@@ -1,2 +1,49 @@
-<h1>Reviews#show</h1>
-<p>Find me in app/views/reviews/show.html.erb</p>
+<h1>レビュー詳細</h1>
+
+<!-- 投稿主名 (ユーザー詳細へリンク) -->
+<p>制作者: 
+  <%= link_to user_path(@review.user.id) do %>
+    <%= @review.user.display_name %>
+  <% end %>
+</p>
+
+<p>タイトル: <%= @review.title %></p>
+
+<p>✩: <%= @review.rating %></p>
+
+<p>ジャンル: <%= @review.genre.name %></p>
+
+<p>製品名: <%= @review.product_name %></p>
+
+<%= image_tag @review.reviews_image.variant(resize: "500x500").processed %>
+
+<p>本文: <%= @review.post %></p>
+
+<!-- コメント一覧 -->
+<div>
+  <% @review.comments.each do |comment| %>
+    <%= comment.user.display_name %><br>
+    <%= comment.post_comment %>
+    <!-- コメント削除 (コメントの作者自身のコメントのみ表示)-->
+    <% if comment.user == current_user %>
+      <!-- commentモデルはreviewモデルへネストされてるのでURLは以下になる -->
+      <!-- review_comment_path(@review.id, comment.id) で /reviews/:review_id/comments/:id に指定 -->
+      <%= link_to "コメントを削除", review_comment_path(@review.id, comment.id), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+    <% end %>
+  <% end %>
+
+  <!-- コメント投稿 -->
+  <!-- commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
+  <%= form_with model: [@review, Comment.new], local: true do |f| %>
+    <label>コメント作成欄</label>
+    <%= f.text_area :post_comment %>
+    <%= f.submit "送信" %>
+  <% end %>
+ </div>
+
+<!-- 自身が投稿したレビューだった場合 編集ページへリンク -->
+<% if @review.user_id == current_user.id %>
+  <%= link_to "編集する", edit_review_path(@review.id) %>
+<% end %>
+
+<%= link_to "レビュー一覧へ", reviews_path %>
