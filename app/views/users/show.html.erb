@@ -18,11 +18,7 @@
     <p>✩: <%= review.rating %></p>
     <p>レビュー: <%= review.post %></p>
     <p>製品: <%= review.product_name %></p>
-    <% if review.reviews_image.attached? %>
-      <p>製品画像 <%= image_tag review.reviews_image.variant(resize: "70x70").processed %></p>
-    <% else %>
-      <p>画像がありません… <%= image_tag "no_image_review.jpg", size: "70x70" %></p>
-    <% end %> 
+    <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
   <% end %>
 
 <!-- 他ユーザーページ -->
@@ -42,10 +38,6 @@
     <p>✩: <%= review.rating %></p>
     <p>レビュー: <%= review.post %></p>
     <p>製品: <%= review.product_name %></p>
-    <% if review.reviews_image.attached? %>
-      <p>製品画像 <%= image_tag review.reviews_image.variant(resize: "70x70").processed %></p>
-    <% else %>
-      <p>画像がありません… <%= image_tag "no_image_review.jpg", size: "70x70" %></p>
-    <% end %> 
+    <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
   <% end %>
 <% end %>

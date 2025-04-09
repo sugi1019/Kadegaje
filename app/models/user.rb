@@ -23,9 +23,10 @@ class User < ApplicationRecord
   def users_image_default
     # 画像が存在するか確認
     unless users_image.attached?
-      users_image.attach(io: File.open(Rails.root.join("public", "images", "no_image.jpg")),
-      filename: "no_image.jpg",
-      content_type: "image/jpeg"
+      users_image.attach(
+        io: File.open(Rails.root.join("public", "images", "no_image.jpg")),
+        filename: "no_image.jpg",
+        content_type: "image/jpeg"
       )
     end
   end

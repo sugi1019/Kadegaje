@@ -1,17 +1,10 @@
 <h1><%= @user.display_name %>さんのアカウント情報編集ページ</h1>
 
 <!-- エラーメッセージ表示 -->
-<% if @user.errors.any? %>
-  <h2>以下のエラーが発生しました: </h2>
-  <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render "layouts/errors", errors_message: @user %>
 
 <!-- ユーザー情報編集フォーム -->
-<%= form_with model: @user, method: :patch do |f| %>
+<%= form_with model: @user, method: :patch, local: true do |f| %>
   <label>アイコン画像</label>
   <!-- accept: "image/jpeg,image/png" でユーザーがjpg pngのみアップできるよう設定 -->
   <%= f.file_field :users_image, accept: "image/jpeg,image/png" %>
