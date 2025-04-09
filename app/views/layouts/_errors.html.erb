@@ -1,0 +1,8 @@
+<% if errors_message.errors.any? %>
+  <h2>以下のエラーが発生しました: </h2>
+  <ul>
+    <% errors_message.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>

@@ -1,0 +1,57 @@
+<header>
+  <!-- サイトロゴ topページリンク -->
+  <div>
+    <%= link_to "トップページへ", root_path %>
+  </div>
+
+  <ul>
+    <% if user_signed_in? %>
+      <!-- アバウト -->
+      <li>
+        <%= link_to "about", about_path %>
+      </li>
+
+      <!-- レビュー一覧 -->
+      <li>
+        <%= link_to "レビュー一覧", reviews_path %>
+      </li>
+
+      <!-- マイページ -->
+      <li>
+        <%= link_to "マイページ", user_path(current_user) %>
+      </li>
+
+      <!-- 新規レビュー -->
+      <li>
+        <%= link_to "レビューを作成", new_review_path %>
+      </li>
+
+      <!-- ログアウト -->
+      <li>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+      <!-- アバウト -->
+      <li>
+        <%= link_to "about", about_path %>
+      </li>
+
+      <!-- レビュー一覧 -->
+      <li>
+        <%= link_to "レビュー一覧", reviews_path %>
+      </li>
+
+      <li>ゲストログイン</li>
+
+      <!-- 新規登録 -->
+      <li>
+        <%= link_to "新規登録", new_user_registration_path %>
+      </li>
+
+      <!-- ログイン -->
+      <li>
+        <%= link_to "ログイン", new_user_session_path %>
+      </li>
+    <% end %>
+  </ul>
+</header>

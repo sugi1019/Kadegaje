@@ -6,11 +6,18 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- Bootstrap導入時 stylesheet_linkからstylesheet_packへ変更 -->
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <main>
+      <!-- フラッシュメッセージ(成功時) 失敗時はエラー文表示に設定-->
+      <%= flash[:notice] %>
+      <%= yield %>
+    </main>
   </body>
 </html>

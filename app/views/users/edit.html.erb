@@ -1,0 +1,31 @@
+<h1><%= @user.display_name %>さんのアカウント情報編集ページ</h1>
+
+<!-- エラーメッセージ表示 -->
+<%= render "layouts/errors", errors_message: @user %>
+
+<!-- ユーザー情報編集フォーム -->
+<%= form_with model: @user, method: :patch, local: true do |f| %>
+  <label>アイコン画像</label>
+  <!-- accept: "image/jpeg,image/png" でユーザーがjpg pngのみアップできるよう設定 -->
+  <%= f.file_field :users_image, accept: "image/jpeg,image/png" %>
+
+  <label>表示名</label>
+  <%= f.text_field :display_name %>
+  
+  <label>メールアドレス</label>
+  <%= f.email_field :email %>
+
+  <label>パスワード(変更したい時のみ入力してください)</label>
+  <%= f.password_field :password %>
+  
+  <label>パスワード 確認用(変更時のみ)</label>
+  <%= f.password_field :password_confirmation %>
+
+  <!-- 更新ボタン -->
+  <%= f.submit "変更を保存する" %>
+<% end %>
+
+<!-- マイページに戻る -->
+<%= link_to "マイページへ戻る", user_path(@user.id) %>
+<!-- アカウント削除確認ページlink -->
+<%= link_to "アカウントを削除する", users_confirm_deletion_path %>

@@ -1,0 +1,43 @@
+<!-- マイページ -->
+<% if @user == current_user %>
+  <h1>マイページ</h1>
+
+  <!-- ユーザー情報 -->
+  <%= image_tag @user.users_image.variant(resize: "200x200").processed %>
+  <p>表示名: <%= @user.display_name %></p>
+
+  <!-- ユーザー情報編集ページへ -->
+  <%= link_to "編集する", edit_user_path(current_user.id) %>
+
+  <% @user.reviews.each do |review| %>
+    <p>タイトル: 
+      <%= link_to review_path(review.id) do %>
+        <%= review.title %>
+      <% end %>
+    </p>
+    <p>✩: <%= review.rating %></p>
+    <p>レビュー: <%= review.post %></p>
+    <p>製品: <%= review.product_name %></p>
+    <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
+  <% end %>
+
+<!-- 他ユーザーページ -->
+<% else %>
+  <h2><%= @user.display_name %>さんの詳細ページ</h2>
+
+  <!-- ユーザー情報 -->
+  <%= image_tag @user.users_image.variant(resize: "200x200").processed %>
+  <p>表示名: <%= @user.display_name %></p>
+
+  <% @user.reviews.each do |review| %>
+    <p>タイトル: 
+      <%= link_to review_path(review.id) do %>
+        <%= review.title %>
+      <% end %>
+    </p>
+    <p>✩: <%= review.rating %></p>
+    <p>レビュー: <%= review.post %></p>
+    <p>製品: <%= review.product_name %></p>
+    <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
+  <% end %>
+<% end %>
