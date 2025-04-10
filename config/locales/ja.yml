@@ -1,0 +1,31 @@
+ja:
+  activerecord:
+    models:
+      # モデル名：表示したい日本語を記述
+      user: ユーザー
+      review: レビュー
+      genre: ジャンル
+      comment: コメント
+    attributes:
+      # モデル名を記述
+      user:
+        # カラム名：表示したい日本語を記述
+        display_name: 表示名
+        email: メールアドレス
+        password: パスワード
+        users_image: ユーザーアイコン
+      review:
+        title: タイトル
+        rating: レーティング
+        post: レビュー
+        product_name: 製品名
+        reviews_image: 製品画像
+      genre:
+        name: ジャンル名
+        additional_info: ジャンル補足説明
+        genres_image: ジャンルアイコン
+      comment:
+        post_comment: コメント
+  errors:
+    messages:
+      not_saved: "保存に失敗しました。再度お試しください。"
