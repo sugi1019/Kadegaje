@@ -5,5 +5,8 @@ class Genre < ApplicationRecord
 
   has_many :reviews, dependent: :destroy
 
-  validates :name, presence: true
-end
+  validates :name,
+            :additional_info,
+            :genres_image,
+            presence: true
+ end
