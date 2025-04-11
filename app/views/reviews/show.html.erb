@@ -34,15 +34,17 @@
 
   <!-- コメント投稿
   commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
-  <%= form_with model: [@review, Comment.new], local: true do |f| %>
-    <label>コメント作成欄</label>
-    <%= f.text_area :post_comment %>
-    <%= f.submit "送信" %>
+  <% if current_user %>
+    <%= form_with model: [@review, Comment.new], local: true do |f| %>
+      <label>コメント作成欄</label>
+      <%= f.text_area :post_comment %>
+      <%= f.submit "送信" %>
+    <% end %>
   <% end %>
  </div>
 
 <!-- 自身が投稿したレビューだった場合 編集ページへリンク -->
-<% if @review.user_id == current_user.id %>
+<% if current_user && @review.user_id == current_user.id %>
   <%= link_to "編集する", edit_review_path(@review.id) %>
 <% end %>
 

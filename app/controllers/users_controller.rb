@@ -1,4 +1,12 @@
 class UsersController < ApplicationController
+  # ログインしないとアクセスをブロック
+  before_action :authenticate_user!, only: [
+    :edit,
+    :update,
+    :destroy,
+    :confirm_deletion
+  ]
+
   def edit
     @user = current_user
   end

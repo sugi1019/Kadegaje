@@ -1,4 +1,10 @@
 class CommentsController < ApplicationController
+
+  before_action :authenticate_user!, only: [
+    :create,
+    :destroy
+  ]
+
   def create
     @review = Review.find(params[:review_id])
     # commentにuserを紐づけたいのでcreateではなくbuild+saveを使用
