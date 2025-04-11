@@ -69,3 +69,8 @@ ja:
     unlocks:
       new:
         resend_unlock_instructions: "アカウントの凍結解除方法を再送する"
+    failure:
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      inactive: "アカウントが有効化されていません。"
+      locked: "アカウントはロックされています。"

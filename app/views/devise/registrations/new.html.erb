@@ -1,7 +1,14 @@
 <h2>新規登録</h2>
 
-<%= form_with model: @user, url: user_registration_path do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<%= form_with scope: :user, url: user_registration_path, local: true do |f| %>
+
+  <!-- 新規登録時のエラーをフラッシュメッセージで返す どうしてもバリデーションエラー時にURLが/usersになってしまうため
+  フォームに入力した内容はリセットされてしまいます。 -->
+  <% if flash[:alert] %>
+    <div class="alert">
+      <%= flash[:alert].html_safe %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :email %><br />
@@ -27,7 +34,7 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "新規登録" %>
   </div>
 <% end %>
 

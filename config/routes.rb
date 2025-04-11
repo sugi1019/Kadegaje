@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
-  devise_for :users
-
+  # コントローラーのオーバーライド反映
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  
   # ユーザールーティング
   root "homes#top"
   get "about", to: "homes#about"
