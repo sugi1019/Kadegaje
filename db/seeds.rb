@@ -34,65 +34,75 @@ user2.users_image.attach(io: File.open(Rails.root.join('app/assets/images/user_s
 
 
 # ジャンル情報
-genre1 = Genre.create!(
+genre1 = Genre.new(
   name: "キッチン家電・ガジェット",
   additional_info: "コーヒーメーカー・炊飯器・トースター・ミキサー"
 )
 genre1.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon1.jpg')), filename: 'genre_icon1.jpg')
+genre1.save!
 
-genre2 = Genre.create!(
+genre2 = Genre.new(
   name: "生活家電",
   additional_info: "洗濯機・エアコン・電子レンジ・掃除機"
 )
 genre2.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon2.jpg')), filename: 'genre_icon2.jpg')
+genre2.save!
 
-genre3 = Genre.create!(
+genre3 = Genre.new(
   name: "オーディオ・音響機器",
   additional_info: "スピーカー・イヤホン・アンプ・CDプレーヤー"
 )
 genre3.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon3.jpg')), filename: 'genre_icon3.jpg')
+genre3.save!
 
-genre4 = Genre.create!(
+genre4 = Genre.new(
   name: "パソコン・周辺機器",
   additional_info: "ノートパソコン・キーボード・マウス・PC用カメラ"
 )
 genre4.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon4.jpg')), filename: 'genre_icon4.jpg')
+genre4.save!
 
-genre5 = Genre.create!(
+genre5 = Genre.new(
   name: "スマホタブレット・周辺機器",
   additional_info: "保護フィルム・スマホケース・タッチペン・モバイルバッテリー"
 )
 genre5.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon5.jpg')), filename: 'genre_icon5.jpg')
+genre5.save!
 
-genre6 = Genre.create!(
+genre6 = Genre.new(
   name: "カメラ・周辺機器",
   additional_info: "レンズ・クリーナー・三脚・ドローン"
 )
 genre6.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon6.jpg')), filename: 'genre_icon6.jpg')
+genre6.save!
 
-genre7 = Genre.create!(
+genre7 = Genre.new(
   name: "ヘルスケア・フィットネスガジェット",
   additional_info: "スマートウォッチ・スマートリング・マッサージ機・心拍計"
 )
 genre7.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon7.jpg')), filename: 'genre_icon7.jpg')
+genre7.save!
 
-genre8 = Genre.create!(
+genre8 = Genre.new(
   name: "ゲーム機・ゲームアクセサリー",
   additional_info: "コントローラー・ゲーミングモニター・ゲーミングキーボード"
 )
 genre8.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon8.jpg')), filename: 'genre_icon8.jpg')
+genre8.save!
 
-genre9 = Genre.create!(
+genre9 = Genre.new(
   name: "DIY・工具ガジェット",
   additional_info: "電動インパクトドライバー・作業用ライト・チェーンソー"
 )
 genre9.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon9.jpg')), filename: 'genre_icon9.jpg')
+genre9.save!
 
-genre10 = Genre.create!(
+genre10 = Genre.new(
   name: "旅行・アウトドアガジェット",
   additional_info: "テント・寝袋・キャリーケース・トラベルアダプター"
 )
 genre10.genres_image.attach(io: File.open(Rails.root.join('app/assets/images/genre_icon10.jpg')), filename: 'genre_icon10.jpg')
+genre10.save!
 
 
 # レビュー情報1
