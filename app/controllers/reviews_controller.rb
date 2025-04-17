@@ -13,20 +13,36 @@ class ReviewsController < ApplicationController
     @review = Review.new
   end
 
-  def index
-    # indexビューのセレクトボックス用
+  def index 
+    # indexビューのジャンルセレクトボックス用
     @genres = Genre.all
+    # Gem Ransackの検索用 params[:q]に検索フォームの入力値が入る
+    @q = Review.ransack(params[:q])
+    # @q.resultで検索の実行、データベースから取り出し
+    @reviews = @q.result
 
     # present?でgenre_idの存在のチェック
     if params[:genre_id].present?
       @selected_genre = Genre.find(params[:genre_id])
-      # whereで条件にあったものを呼び出す
-      @reviews = Review.where(genre_id: params[:genre_id])
-    else
-      # ALLジャンル用
-      @reviews = Review.all
+      # whereでジャンル絞り込み
+      @reviews = @reviews.where(genre_id: params[:genre_id])
     end
   end
+  
+  # def index 1
+  #   # indexビューのセレクトボックス用
+  #   @genres = Genre.all
+
+  #   # present?でgenre_idの存在のチェック
+  #   if params[:genre_id].present?
+  #     @selected_genre = Genre.find(params[:genre_id])
+  #     # whereで条件にあったものを呼び出す
+  #     @reviews = Review.where(genre_id: params[:genre_id])
+  #   else
+  #     # ALLジャンル用
+  #     @reviews = Review.all
+  #   end
+  # end
   
   def show
     @review = Review.find(params[:id])
