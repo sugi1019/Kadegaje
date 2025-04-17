@@ -60,6 +60,9 @@ gem 'devise'
 gem 'rails-i18n'
 gem 'devise-i18n-views'
 
+# 検索機能
+gem 'ransack'
+
 # MySQL利用用
 gem 'dotenv-rails'
 group :production do

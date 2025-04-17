@@ -1,16 +1,40 @@
+
 <!-- ALLジャンルまたは選択したジャンル -->
 <% if @selected_genre %>
   <h1><%= @selected_genre.name %>のレビュー</h1>
   <%= link_to "ALLジャンルへ", reviews_path %>
 <% else %>
   <h1>ALLジャンル レビュー</h1>
-  <!-- reviews_pathにgenre_idのパラメーターを送る -->
+  <!-- ジャンル検索用 reviews_pathにgenre_idのパラメーターを送る -->
   <%= form_with url: reviews_path, method: :get, local: true do |f| %>
     <!-- セレクトボックスでジャンル別に絞り込む  .mapで配列を作成 |変数指定| [表示する変数,送信する値]でgenre_idにidを保存 -->
     <%= f.select :genre_id, options_for_select(@genres.map { |genre| [genre.name, genre.id] }), prompt: "ジャンルを選択" %>
     <%= f.submit "絞り込む" %>
   <% end %>
+  <!-- Ransack 検索用 -->
+  <%= search_form_for @q, url: reviews_path, method: :get do |f| %>
+    <div>
+      <%= f.label :title_cont, "タイトル検索" %>
+      <%= f.search_field :title_cont %>
+    </div>
+
+    <div>
+      <%= f.label :product_name_cont, "製品名検索" %>
+      <%= f.search_field :product_name_cont %>
+    </div>
+
+    <div>
+      <%= f.label :rating_eq, "✩" %>
+      <%= f.select :rating_eq, options_for_select([5, 4, 3, 2, 1]) %>
+    </div>
+
+    <div>
+      <%= f.submit "検索実行" %>
+    </div>
+  <% end %>
+
 <% end %>
+
 
 
 <!-- 新規レビュー作成へ (ログイン時のみ表示)-->
