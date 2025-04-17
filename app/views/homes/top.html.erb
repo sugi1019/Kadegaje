@@ -9,11 +9,16 @@
 <!-- タイトル検索 #######################################-->
 
 
-<!-- ジャンル一覧 bootstrapのカードの予定 シンプルにしたい ##############################-->
+<!-- ジャンル一覧 bootstrapのカードの予定 シンプルにしたい -->
+<%= link_to "ALLジャンル", reviews_path %>
 <% @genres.each do |genre| %>
-  <%= genre.name %><br>
-  <%= genre.additional_info %><br>
-  <%= image_tag genre.genres_image.variant(resize: "70x70").processed %><br>
+  <!-- リンクをパラメーター付きで作成 -->
+  <%= link_to reviews_path(genre_id: genre.id) do %>
+    <%= genre.name %><br>
+    <%= genre.additional_info %><br>
+    <%= image_tag genre.genres_image.variant(resize: "70x70").processed %>
+  <% end %>
+  <br>
 <% end %>
 
 <p>ご利用にあたって：</p>
