@@ -28,22 +28,7 @@ class ReviewsController < ApplicationController
       @reviews = @reviews.where(genre_id: params[:genre_id])
     end
   end
-  
-  # def index 1
-  #   # indexビューのセレクトボックス用
-  #   @genres = Genre.all
-
-  #   # present?でgenre_idの存在のチェック
-  #   if params[:genre_id].present?
-  #     @selected_genre = Genre.find(params[:genre_id])
-  #     # whereで条件にあったものを呼び出す
-  #     @reviews = Review.where(genre_id: params[:genre_id])
-  #   else
-  #     # ALLジャンル用
-  #     @reviews = Review.all
-  #   end
-  # end
-  
+    
   def show
     @review = Review.find(params[:id])
   end
