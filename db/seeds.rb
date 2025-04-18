@@ -8,11 +8,10 @@
 
 # テスト用データ
 
-# 管理者アカウント（後日実装予定）
-# Admin.find_or_create_by!(email: "a@a") do |admin|
-#   admin.password = "123456"
-# end
-
+# 管理者アカウント
+AdminUser.find_or_create_by!(email: "a@a") do |admin_user|
+  admin_user.password = "123456"
+end
 
 # ユーザー情報
 user1 = User.find_or_create_by!(email: "a@a") do |user|
@@ -155,7 +154,7 @@ end
 
 
 # ターミナル表示
-puts "adminアカウントの情報です"
+puts "admin_userアカウントの情報です"
 puts "email = a@a"
 puts "password = 123456"
 puts "ユーザー1のアカウントの情報です"
