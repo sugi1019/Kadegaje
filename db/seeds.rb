@@ -8,10 +8,10 @@
 
 # テスト用データ
 
-# 管理者アカウント（後日実装予定）
-# Admin.find_or_create_by!(email: "a@a") do |admin|
-#   admin.password = "123456"
-# end
+# 管理者アカウント
+AdminUser.find_or_create_by!(email: "a@a") do |admin_user|
+  admin_user.password = "123456"
+end
 
 
 # ユーザー情報
