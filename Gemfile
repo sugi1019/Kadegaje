@@ -63,6 +63,9 @@ gem 'devise-i18n-views'
 # 検索機能
 gem 'ransack'
 
+#ページネーション機能
+gem 'kaminari','~> 1.2.1'
+
 # MySQL利用用
 gem 'dotenv-rails'
 group :production do
