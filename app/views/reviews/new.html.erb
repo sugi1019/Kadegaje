@@ -7,21 +7,24 @@
   <li>著作権を侵害する投稿は行わないでください。公式名や商標を無断で使用することはできません。</li>
 </ul>
 
+
 <!-- エラーメッセージ表示 -->
 <%= render "layouts/errors", errors_message: @review %>
+
 
 <%= form_with model: @review, local: true do |f| %>
   <label>タイトル</label>
   <%= f.text_field :title %>
 
   <label>✩</label>
-  <%= f.select :rating, [["1", 1],["2", 2],["3", 3],["4", 4],["5", 5]] %>
+  <%= f.select :rating, [['5', 5], ['4', 4], ['3', 3], ['2', 2], ['1', 1]] %>
 
   <label>ジャンル</label>
   <!-- .mapでALLで配列を作成[表示する変数,送信する値]でgenre_idにidを保存  -->
   <%= f.select :genre_id, Genre.all.map { |g| [g.name, g.id] }, prompt:"ジャンルを選択してください" %>
   
   <label>製品名</label>
+  <p>なるべく詳しくご記入いただくと、他のユーザーが参考にしやすくなります。（例：◯◯製xxxx）もし正確な名前が分からない場合は、メーカー名だけでも大丈夫です!</p>
   <%= f.text_field :product_name %>
 
   <label>写真</label>

@@ -1,4 +1,34 @@
 <h1>ジャンル新規作成</h1>
-<!-- ジャンル新規作成フォーム -->
 
-<!-- ジャンル一覧表示 編集リンクを付ける -->
+<!-- エラーメッセージ表示 -->
+<%= render "layouts/errors", errors_message: @genre %>
+
+<!-- ジャンル新規作成フォーム ネームスペース使ってるのでurlを指定 genre_paramsのためにmodelも記述 -->
+<%= form_with model: @genre, url: admin_genres_path, local: true do |f| %>
+  <label>ジャンル名</label>
+  <%= f.text_field :name %>
+
+  <label>ジャンル補足説明(製品例: ドライヤー・キーボードなど)</label>
+  <%= f.text_field :additional_info %>
+
+  <label>ジャンルアイコン(アイコンは必須です)</label>
+  <%= f.file_field :genres_image, accept: "image/jpeg,image/png" %>
+
+  <%= f.submit "ジャンルを作成する" %>
+<% end %>
+
+
+<!-- ジャンル一覧表示 (編集ページへリンク) -->
+<h3>現在のジャンル一覧 現在: 全<%= @genres.count %>項目</h3>
+<% @genres.each do |genre| %>
+  <%= link_to edit_admin_genre_path(genre.id) do %>
+    <!-- ジャンルアイコン -->
+    <%= image_tag genre.genres_image.variant(resize: "50x50").processed %>
+
+    <!-- ジャンル名 -->
+    <p>ジャンル名: <%= genre.name %></p>
+
+    <!-- ジャンル例 -->
+    <p>ジャンル例: <%= genre.additional_info %></p>
+  <% end %>
+<% end %>
