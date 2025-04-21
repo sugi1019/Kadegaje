@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'genres/new'
+    get 'genres/edit'
+  end
+  namespace :admin do
+    get 'reviews/index'
+  end
+  namespace :admin do
+    get 'users/index'
+  end
   # コントローラーのオーバーライド反映 path:''でurlを変更
   devise_for :users, path: "", controllers: {
     registrations: "users/registrations",
