@@ -21,8 +21,17 @@ class Review < ApplicationRecord
 
   # Ransackの検索許可
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "genre_id", "id", "post", "product_name", "rating", "title", "updated_at", "user_id"]
+    ["product_name",
+    "rating",
+    "title"
+    ]
   end
+  
+  # Ransackのアソシエーション
+  def self.ransackable_associations(auth_object = nil)
+    ["user"]
+  end
+
 
   private
 

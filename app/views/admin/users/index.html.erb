@@ -1,1 +1,38 @@
 <h1>管理者用ユーザー一覧</h1>
+
+<%= link_to "トップに戻る", admin_root_path %>
+
+  <!-- Ransack 検索用 -->
+  <%= search_form_for @q, url: admin_users_path, method: :get do |f| %>
+
+    <div>
+      <%= f.label :display_name_cont, "表示名検索" %>
+      <%= f.search_field :display_name_cont %>
+    </div>
+
+    <div>
+      <%= f.label :email_cont, "メールアドレス検索(半角英数字)" %>
+      <%= f.search_field :email_cont %>
+    </div>
+
+    <div>
+      <%= f.submit "検索実行" %>
+    </div>
+  <% end %>
+
+<!-- ユーザー 一覧表示 -->
+<% @users.each do |user| %>
+  <%= image_tag user.users_image.variant(resize: "50x50").processed %>
+
+  <p>表示名: <%= user.display_name %></p>
+
+  <!-- ユーザーのレビュー数 -->
+  <p>レビュー数: <%= user.reviews.count %></p>
+
+  <!-- ユーザーのコメント数 -->
+  <p>コメント数: <%= user.comments.count %></p>
+
+  <p>メールアドレス: <%= user.email %></p>
+
+  <%= link_to "ユーザーを削除する", user_path(user.id), method: :delete , data: { confirm: "本当に削除しますか？" } %>
+<% end %>

@@ -1,4 +1,8 @@
 class Admin::GenresController < ApplicationController
+
+  # ログインしないとアクセスをブロック
+  before_action :authenticate_admin_user!
+
   def new
   end
 

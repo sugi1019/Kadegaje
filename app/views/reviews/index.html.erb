@@ -25,7 +25,8 @@
 
     <div>
       <%= f.label :rating_eq, "✩" %>
-      <%= f.select :rating_eq, options_for_select([5, 4, 3, 2, 1]) %>
+      <!-- ["すべて", ""] で空欄を選択できるようにしてる -->
+      <%= f.select :rating_eq, options_for_select([["すべて", ""], 5, 4, 3, 2, 1]) %>
     </div>
 
     <div>

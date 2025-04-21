@@ -2,9 +2,12 @@
 <p>ここではジャンルの編集・追加や不適切なユーザーの削除ができます</p>
 
 <!-- レビュー一覧へ -->
+<%= link_to "レビュー一覧へ", admin_reviews_path %>
 
 <!-- ジャンルへ -->
+<%= link_to "ジャンルへ", new_admin_genre_path %>
 
 <!-- ユーザー一覧へ -->
+<%= link_to "ユーザー一覧へ", admin_users_path %>
 
 <%= link_to "ログアウト", destroy_admin_user_session_path, method: :delete %>

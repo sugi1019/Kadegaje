@@ -1,12 +1,12 @@
 class ReviewsController < ApplicationController
 
-  # ログインしないとアクセスをブロック
+  # ログインしないとアクセスをブロック authenticate_user_or_admin_user!でadmin_userもdestroyだけは使えるように設定
+  before_action :authenticate_user_or_admin_user!, only: :destroy
   before_action :authenticate_user!, only: [
     :new,
     :create,
     :edit,
-    :update,
-    :destroy
+    :update
   ]
 
   def new
@@ -63,7 +63,13 @@ class ReviewsController < ApplicationController
     review = Review.find(params[:id])
     review.destroy
     flash[:notice] = "レビューを削除しました"
-    redirect_to reviews_path
+    if admin_user_signed_in?
+      # 管理者削除用
+      redirect_to admin_reviews_path
+    else
+      # ユーザー自身削除用
+      redirect_to reviews_path
+    end
   end
 
   private
@@ -78,4 +84,12 @@ class ReviewsController < ApplicationController
       :post
     )
   end
+
+  # ログインしてるのがuserかadmin_user以外ならアクセスをブロック
+  def authenticate_user_or_admin_user!
+    unless user_signed_in? || admin_user_signed_in?
+      redirect_to new_user_session_path
+    end
+  end
+  
 end

@@ -17,6 +17,11 @@ class User < ApplicationRecord
   # 新規作成直後に実行
   after_create :users_image_default
 
+  # Ransackの検索許可
+  def self.ransackable_attributes(auth_object = nil)
+    ["display_name","email"]
+  end
+
   private
 
   # 新規作成時にデフォルトアイコンを設定

@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  # ログインしないとアクセスをブロック
+  # ログインしないとアクセスをブロック authenticate_user_or_admin_user!でadmin_userもdestroyだけは使えるように設定
+  before_action :authenticate_user_or_admin_user!, only: :destroy
   before_action :authenticate_user!, only: [
     :edit,
     :update,
-    :destroy,
     :confirm_deletion
   ]
 
@@ -28,9 +28,17 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    current_user.destroy
-    flash[:notice] = "正常に削除されました"
-    redirect_to root_path
+    # 管理者削除用
+    if admin_user_signed_in?
+      User.find(params[:id]).destroy
+      flash[:notice] = "ユーザーを削除しました"
+      redirect_to admin_users_path
+    # ユーザー自身削除用
+    elsif user_signed_in?
+      current_user.destroy
+      flash[:notice] = "正常に削除されました"
+      redirect_to root_path
+    end
   end
 
   def confirm_deletion
@@ -53,6 +61,13 @@ class UsersController < ApplicationController
         blank.delete(:password)
         blank.delete(:password_confirmation)
       end
+    end
+  end
+
+  # ログインしてるのがuserかadmin_user以外ならアクセスをブロック
+  def authenticate_user_or_admin_user!
+    unless user_signed_in? || admin_user_signed_in?
+      redirect_to new_user_session_path
     end
   end
 
