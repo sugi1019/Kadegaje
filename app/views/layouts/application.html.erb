@@ -13,7 +13,10 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
+    <!-- application_controllerのヘルパーメソッド使用 現在サインインしてるのがadmin_userならヘッダーを使わない -->
+    <% unless current_admin_user? %>
+      <%= render 'layouts/header' %>
+    <% end %>
     <main>
       <!-- フラッシュメッセージ(成功時) 失敗時はエラー文表示に設定-->
       <%= flash[:notice] %>

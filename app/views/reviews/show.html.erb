@@ -22,7 +22,9 @@
 <!-- コメント一覧 -->
 <div>
   <% @review.comments.each do |comment| %>
-    <%= comment.user.display_name %><br>
+    <!-- コメントの表示名 コメント主のユーザー詳細へリンク -->
+    <%= link_to comment.user.display_name, user_path(comment.user) %>
+    <%= image_tag comment.user.users_image.variant(resize: "50x50").processed %><br>
     <%= comment.post_comment %>
     <!-- コメント削除 (コメントの作者自身のコメントのみ表示)-->
     <% if comment.user == current_user %>
@@ -32,8 +34,7 @@
     <% end %>
   <% end %>
 
-  <!-- コメント投稿
-  commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
+  <!-- コメント投稿 commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
   <% if current_user %>
     <%= form_with model: [@review, Comment.new], local: true do |f| %>
       <label>コメント作成欄</label>
