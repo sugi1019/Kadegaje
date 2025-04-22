@@ -24,4 +24,13 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  # ゲストユーザー用
+  def guest_sign_in
+    user = User.guest
+    sign_in user
+    flash[:notice] = "ゲストユーザーでログインしました: ゲストユーザーではデータは保存されません"
+    redirect_to root_path
+  end
+
 end
