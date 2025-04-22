@@ -1,30 +1,51 @@
 <header>
-  <!-- サイトロゴ topページリンク -->
-  <div>
-    <%= link_to "トップページへ", root_path %>
-  </div>
-
-  <ul>
-    <% if user_signed_in? %>
-      <li><%= link_to "about", about_path %></li>
-
-      <li><%= link_to "レビュー一覧", reviews_path %></li>
-
-      <li><%= link_to "マイページ", user_path(current_user) %></li>
-
-      <li><%= link_to "レビューを作成", new_review_path %></li>
-
-      <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
-    <% else %>
-      <li><%= link_to "about", about_path %></li>
-
-      <li><%= link_to "レビュー一覧", reviews_path %></li>
-
-      <li><%= link_to "ゲストログイン(お試し)", users_guest_sign_in_path, method: :post %></li>
-
-      <li><%= link_to "新規登録", new_user_registration_path %></li>
-
-      <li><%= link_to "ログイン", new_user_session_path %></li>
+  <!-- navbar-expand-md でハンバーガーメニューへ変わるタイミングを設定md(中) navbar-light で文字の色 -->
+  <nav class="navbar navbar-expand-md navbar-light " style="background-color:rgb(235, 235, 250);">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "rogo.png", alt: "トップページへ", size: "75x50" %>
     <% end %>
-  </ul>
+
+    <!-- ハンバーガーメニュー作成 -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "about", about_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "レビュー一覧", reviews_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "マイページ", user_path(current_user), class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "レビューを作成", new_review_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "about", about_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "レビュー一覧", reviews_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ゲストログイン(お試し)", users_guest_sign_in_path, method: :post, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
 </header>
