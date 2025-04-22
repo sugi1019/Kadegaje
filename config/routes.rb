@@ -1,14 +1,5 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get 'genres/new'
-    get 'genres/edit'
-  end
-  namespace :admin do
-    get 'reviews/index'
-  end
-  namespace :admin do
-    get 'users/index'
-  end
+
   # コントローラーのオーバーライド反映 path:''でurlを変更
   devise_for :users, path: "", controllers: {
     registrations: "users/registrations",
@@ -19,6 +10,12 @@ Rails.application.routes.draw do
   devise_for :admin_users, path: "admin", skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
+
+  # ゲストログイン用
+  devise_scope :user do
+    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+  end
+
 
   # ユーザールーティング
   root "homes#top"

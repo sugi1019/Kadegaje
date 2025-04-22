@@ -22,6 +22,22 @@ class User < ApplicationRecord
     ["display_name","email"]
   end
 
+  # ゲストログイン用
+  GUEST_USER_EMAIL = "guest@example.com"
+  # ゲストユーザーがなければ作成
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+      # SecureRandom.urlsafe_base64 で＋や／を含まない安全な乱数を作成
+      user.password = SecureRandom.urlsafe_base64
+      user.display_name = "guest-user"
+    end
+  end
+  # ゲストユーザーを判断 (current_user.guest?)の様に使う
+  def guest?
+    email == 'guest@example.com'
+  end
+
+
   private
 
   # 新規作成時にデフォルトアイコンを設定

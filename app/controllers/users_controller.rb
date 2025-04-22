@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   # ログインしないとアクセスをブロック authenticate_user_or_admin_user!でadmin_userもdestroyだけは使えるように設定
   before_action :authenticate_user_or_admin_user!, only: :destroy
+  # ゲストユーザーのユーザー編集へのアクセスをブロック
+  before_action :ensure_guest_user, only: [:edit]
   before_action :authenticate_user!, only: [
     :edit,
     :update,
@@ -28,6 +30,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    # ゲストユーザーは削除できない
+    if current_user.guest?
+      flash[:notice] = "ゲストユーザーは削除できません"
+      # return を使ってその場でdestroyアクションの処理を終了させる
+      return redirect_to user_path(current_user)
+    end
+
     # 管理者削除用
     if admin_user_signed_in?
       User.find(params[:id]).destroy
@@ -71,4 +80,14 @@ class UsersController < ApplicationController
     end
   end
 
+  # ログインしてるのがゲストユーザーならアクセスをブロック
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    # .guest?はuserモデルに記述してあるカスタムメソッド
+    if @user.guest?
+      flash[:notice] = "ゲストユーザーのプロフィール編集への遷移は禁止されています。"
+      redirect_to user_path(current_user)
+    end
+  end
+  
 end
