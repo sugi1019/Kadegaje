@@ -1,13 +1,14 @@
-<h1>管理者トップページ</h1>
-<p>ここではジャンルの編集・追加や不適切なユーザーの削除ができます</p>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">管理者トップページ</h1>
+  <p class="text-center mb-5">ここではジャンルの編集・追加や不適切なユーザーの削除ができます</p>
 
-<!-- レビュー一覧へ -->
-<%= link_to "レビュー一覧へ", admin_reviews_path %>
+  <div class="d-flex justify-content-between mb-4 flex-wrap gap-3">
+    <%= link_to "レビュー一覧へ", admin_reviews_path, class: "btn btn-outline-primary btn-lg flex-fill text-center py-4" %>
+    <%= link_to "ジャンルへ", new_admin_genre_path, class: "btn btn-outline-success btn-lg flex-fill text-center py-4" %>
+    <%= link_to "ユーザー一覧へ", admin_users_path, class: "btn btn-outline-warning btn-lg flex-fill text-center py-4" %>
+  </div>
 
-<!-- ジャンルへ -->
-<%= link_to "ジャンルへ", new_admin_genre_path %>
-
-<!-- ユーザー一覧へ -->
-<%= link_to "ユーザー一覧へ", admin_users_path %>
-
-<%= link_to "ログアウト", destroy_admin_user_session_path, method: :delete %>
+  <div class="text-center">
+    <%= link_to "ログアウト", destroy_admin_user_session_path, method: :delete, class: "btn btn-danger" %>
+  </div>
+</div>
