@@ -1,38 +1,47 @@
-<h1>管理者用ユーザー一覧</h1>
-
-<%= link_to "トップに戻る", admin_root_path %>
-
-  <!-- Ransack 検索用 -->
-  <%= search_form_for @q, url: admin_users_path, method: :get do |f| %>
-
-    <div>
-      <%= f.label :display_name_cont, "表示名検索" %>
-      <%= f.search_field :display_name_cont %>
+<!-- Ransack 検索用 -->
+<%= search_form_for @q, url: admin_users_path, method: :get, html: { class: "search-form shadow-sm p-3 mb-5 rounded border-primary" } do |f| %>
+  <div class="form-row align-items-end">
+    <!-- 表示名検索 -->
+    <div class="col-md-4">
+      <%= f.label :display_name_cont, "表示名検索", class: "form-label text-info" %>
+      <%= f.search_field :display_name_cont, class: "form-control", placeholder: "表示名を入力" %>
     </div>
 
-    <div>
-      <%= f.label :email_cont, "メールアドレス検索(半角英数字)" %>
-      <%= f.search_field :email_cont %>
+    <!-- メールアドレス検索 -->
+    <div class="col-md-4">
+      <%= f.label :email_cont, "メールアドレス検索(半角英数字)", class: "form-label text-warning" %>
+      <%= f.search_field :email_cont, class: "form-control", placeholder: "メールアドレスを入力" %>
     </div>
 
-    <div>
-      <%= f.submit "検索実行" %>
+    <!-- 検索ボタン -->
+    <div class="col-md-2">
+      <%= f.submit "検索実行", class: "btn btn-success w-100" %>
     </div>
-  <% end %>
+  </div>
+<% end %>
 
-<!-- ユーザー 一覧表示 -->
+<h1 class="mb-4">管理者用ユーザー一覧</h1>
+
+<%= link_to "トップに戻る", admin_root_path, class: "btn btn-primary mb-3" %>
+
 <% @users.each do |user| %>
-  <%= image_tag user.users_image.variant(resize: "50x50").processed %>
+  <div class="border rounded p-3 mb-4 shadow-sm ">
+    <!-- 表示名 + アイコン -->
+    <div class="d-flex align-items-center mb-2">
+      <%= image_tag user.users_image.variant(resize: "50x50").processed, class: "rounded-circle mr-3" %>
+      <h5 class="mb-0"><%= user.display_name %></h5>
+    </div>
 
-  <p>表示名: <%= user.display_name %></p>
+    <!-- メール -->
+    <p class="mb-1"><strong>メールアドレス:</strong> <%= user.email %></p>
 
-  <!-- ユーザーのレビュー数 -->
-  <p>レビュー数: <%= user.reviews.count %></p>
+    <!-- レビュー数 -->
+    <p class="mb-1"><strong>レビュー数:</strong> <%= user.reviews.count %></p>
 
-  <!-- ユーザーのコメント数 -->
-  <p>コメント数: <%= user.comments.count %></p>
+    <!-- コメント数 -->
+    <p class="mb-3"><strong>コメント数:</strong> <%= user.comments.count %></p>
 
-  <p>メールアドレス: <%= user.email %></p>
-
-  <%= link_to "ユーザーを削除する", user_path(user.id), method: :delete , data: { confirm: "本当に削除しますか？" } %>
+    <!-- 削除ボタン -->
+    <%= link_to "ユーザーを削除する", user_path(user.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+  </div>
 <% end %>

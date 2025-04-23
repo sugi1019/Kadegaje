@@ -1,92 +1,88 @@
-
-<!-- ALLジャンルまたは選択したジャンル -->
-<% if @selected_genre %>
-  <h1><%= @selected_genre.name %>のレビュー</h1>
-  <%= link_to "ALLジャンルへ", reviews_path %>
-<% else %>
-  <h1>ALLジャンル レビュー</h1>
-  <!-- ジャンル検索用 reviews_pathにgenre_idのパラメーターを送る -->
-  <%= form_with url: reviews_path, method: :get, local: true do |f| %>
-    <!-- セレクトボックスでジャンル別に絞り込む  .mapで配列を作成 |変数指定| [表示する変数,送信する値]でgenre_idにidを保存 -->
-    <%= f.select :genre_id, options_for_select(@genres.map { |genre| [genre.name, genre.id] }), prompt: "ジャンルを選択" %>
-    <%= f.submit "絞り込む" %>
-  <% end %>
-  <!-- Ransack 検索用 -->
-  <%= search_form_for @q, url: reviews_path, method: :get do |f| %>
-    <div>
-      <%= f.label :title_cont, "タイトル検索" %>
-      <%= f.search_field :title_cont %>
+<!-- Ransackの検索機能 -->
+<%= search_form_for @q, url: reviews_path, method: :get, html: { class: "search-form shadow-sm p-3 mb-5 rounded border-primary" } do |f| %>
+  <div class="form-row align-items-end">
+    <!-- ジャンル選択 -->
+    <div class="col-md-3">
+      <%= f.label :genre_id_eq, "ジャンル", class: "form-label text-danger" %>
+      <%= f.select :genre_id_eq, options_for_select([["すべて", ""]] + @genres.map { |genre| [genre.name, genre.id] }, @q.genre_id_eq), { prompt: "ジャンルを選択" }, class: "form-control" %>
     </div>
 
-    <div>
-      <%= f.label :product_name_cont, "製品名検索" %>
-      <%= f.search_field :product_name_cont %>
+    <!-- タイトル検索 -->
+    <div class="col-md-3">
+      <%= f.label :title_cont, "タイトル", class: "form-label text-success" %>
+      <%= f.search_field :title_cont, class: "form-control", placeholder: "タイトル検索" %>
     </div>
 
-    <div>
-      <%= f.label :rating_eq, "✩" %>
-      <!-- ["すべて", ""] で空欄を選択できるようにしてる -->
-      <%= f.select :rating_eq, options_for_select([["すべて", ""], 5, 4, 3, 2, 1]) %>
+    <!-- 製品名検索 -->
+    <div class="col-md-3">
+      <%= f.label :product_name_cont, "製品名", class: "form-label text-warning" %>
+      <%= f.search_field :product_name_cont, class: "form-control", placeholder: "製品名検索" %>
     </div>
 
-    <div>
-      <%= f.submit "検索実行" %>
-    </div>
-  <% end %>
-
-<% end %>
-
-
-
-<!-- 新規レビュー作成へ (ログイン時のみ表示)-->
-<% if user_signed_in? %>
-  <%= link_to "新しいレビューを書く", new_review_path %>
-<% end %>
-
-<% @reviews.each do |review| %>
-  <div class="mb-4 p-3 border rounded d-flex">
-    <!-- 投稿者アイコン（左上に表示、丸く） -->
-    <div class="me-3">
-      <%= image_tag review.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle" %>
+    <!-- 評価 -->
+    <div class="col-md-2">
+      <%= f.label :rating_eq, "✩評価", class: "form-label text-info" %>
+      <%= f.select :rating_eq, options_for_select([["すべて", ""]] + [5, 4, 3, 2, 1], @q.rating_eq), {}, class: "form-control" %>
     </div>
 
-    <!-- 投稿内容 -->
-    <div>
-      <!-- 投稿者名 -->
-      <p class="mb-1">
-        <%= link_to user_path(review.user.id) do %>
-          <%= review.user.display_name %>
-        <% end %>
-      </p>
-
-      <!-- 製品名 -->
-      <p class="mb-1"><%= review.product_name %></p>
-
-      <!-- ✩評価 -->
-      <p class="mb-1">✩: <%= review.rating %></p>
-
-      <!-- タイトル -->
-      <p class="mb-1">
-        <%= link_to review_path(review.id) do %>
-          <%= review.title %>
-        <% end %>
-      </p>
-
-      <!-- 製品画像 -->
-      <p class="mb-0">
-        <% if review.reviews_image.attached? %>
-          <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
-        <% else %>
-          <%= image_tag "no_image_review.jpg", size: "70x70" %>
-        <% end %>
-      </p>
-
-      <!-- コメント数 -->
-      <p class="mt-2">コメント数: <%= review.comments.count %></p>
-
+    <!-- 検索ボタン -->
+    <div class="col-md-1">
+      <%= f.submit "検索", class: "btn btn-success w-100" %>
     </div>
   </div>
 <% end %>
 
+
+<!-- 新規レビュー作成へ (ログイン時のみ表示) -->
+<% if user_signed_in? %>
+  <%= link_to "新しいレビューを書く", new_review_path, class: "btn btn-primary btn-lg" %>
+<% end %>
+
+
+<h2>みんなのレビュー</h2>
+
+<div class="row px-4">
+  <% @reviews.each do |review| %>
+    <div class="col-md-6 mb-4">
+      <div class="card h-100 shadow-sm hover-shadow genre-card-hover">
+        <%= link_to review_path(review), class: "text-decoration-none text-dark d-block h-100" do %>
+          <div class="card-body d-flex">
+            <!-- 投稿者アイコン -->
+            <div class="me-3">
+              <%= image_tag review.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle" %>
+            </div>
+
+            <!-- 投稿内容 -->
+            <div>
+              <p class="mb-1"><%= review.user.display_name %></p>
+              <p class="mb-1"><%= review.product_name %></p>
+              <p class="mb-1">✩: <%= review.rating %></p>
+              <p class="mb-1"><%= review.title %></p>
+              <p class="mb-0">
+                <% if review.reviews_image.attached? %>
+                  <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
+                <% else %>
+                  <%= image_tag "no_image_review.jpg", size: "70x70" %>
+                <% end %>
+              </p>
+              <p class="mt-2">コメント数: <%= review.comments.count %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
 <!-- ページネーション -->
 <%= paginate @reviews %>
+
+
+<!-- ホバー時に影を付ける -->
+<style>
+  .genre-card-hover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    transform: translateY(-3px);
+    transition: all 0.2s ease-in-out;
+  }
+</style>

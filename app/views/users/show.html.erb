@@ -28,11 +28,11 @@
       <p class="mb-1"><strong>評価:</strong> ✩ <%= review.rating %></p>
       <p class="mb-1"><strong>レビュー内容:</strong> <%= review.post %></p>
       <p class="mb-1"><strong>製品名:</strong> <%= review.product_name %></p>
-      <% if review.reviews_image.attached? %>
-        <div>
-          <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-fluid rounded shadow-sm" %>
-        </div>
-      <% end %>
+
+      <div>
+        <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-fluid rounded shadow-sm" %>
+        <p class="mt-2 mb-0"><strong>コメント数:</strong> <%= review.comments.count %></p>
+      </div>
     </div>
   <% end %>
 </div>

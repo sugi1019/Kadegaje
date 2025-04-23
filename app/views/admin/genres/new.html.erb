@@ -1,36 +1,57 @@
-<h1>ジャンル新規作成</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">ジャンル新規作成</h1>
+  <%= link_to "トップに戻る", admin_root_path, class: "btn btn-primary mt-4 mr-4" %>
+</div>
 
-<%= link_to "管理者トップページへ", admin_root_path %>
 
 <!-- エラーメッセージ表示 -->
 <%= render "layouts/errors", errors_message: @genre %>
 
-<!-- ジャンル新規作成フォーム ネームスペース使ってるのでurlを指定 genre_paramsのためにmodelも記述 -->
-<%= form_with model: @genre, url: admin_genres_path, local: true do |f| %>
-  <label>ジャンル名</label>
-  <%= f.text_field :name %>
+<!-- ジャンル新規作成フォーム -->
+<%= form_with model: @genre, url: admin_genres_path, local: true, class: "border rounded p-4 shadow-sm bg-light mb-5" do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "ジャンル名", class: "form-label fw-bold" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
 
-  <label>ジャンル補足説明(製品例: ドライヤー・キーボードなど)</label>
-  <%= f.text_field :additional_info %>
+  <div class="mb-3">
+    <%= f.label :additional_info, "ジャンル補足説明 (例: ドライヤー・キーボード)", class: "form-label fw-bold" %>
+    <%= f.text_field :additional_info, class: "form-control" %>
+  </div>
 
-  <label>ジャンルアイコン(アイコンは必須です)</label>
-  <%= f.file_field :genres_image, accept: "image/jpeg,image/png" %>
+<div class="mb-3">
+  <label for="genres_image" class="form-label fw-bold">ジャンルアイコン (必須)</label>
+  <!-- w-auto で実際にクリックできる横幅を調整 -->
+  <%= f.file_field :genres_image, class: "form-control-file w-auto" %>
+</div>
 
-  <%= f.submit "ジャンルを作成する" %>
+  <%= f.submit "ジャンルを作成する", class: "btn btn-success" %>
 <% end %>
 
+<!-- ジャンル一覧表示 -->
+<h3 class="mb-3">現在のジャンル一覧（全 <%= @genres.count %> 件）</h3>
 
-<!-- ジャンル一覧表示 (編集ページへリンク) -->
-<h3>現在のジャンル一覧 現在: 全<%= @genres.count %>項目</h3>
-<% @genres.each do |genre| %>
-  <%= link_to edit_admin_genre_path(genre.id) do %>
-    <!-- ジャンルアイコン -->
-    <%= image_tag genre.genres_image.variant(resize: "50x50").processed %>
-
-    <!-- ジャンル名 -->
-    <p>ジャンル名: <%= genre.name %></p>
-
-    <!-- ジャンル例 -->
-    <p>ジャンル例: <%= genre.additional_info %></p>
+<div class="row">
+  <% @genres.each do |genre| %>
+    <div class="col-md-4 mb-4">
+      <%= link_to edit_admin_genre_path(genre.id), class: "text-decoration-none text-dark" do %>
+        <div class="border rounded p-3 shadow-sm h-100 bg-white genre-card-hover">
+          <div class="mb-2">
+            <%= image_tag genre.genres_image.variant(resize: "50x50").processed, class: "rounded" %>
+          </div>
+          <p class="mb-1"><strong>ジャンル名:</strong> <%= genre.name %></p>
+          <p class="mb-0"><strong>ジャンル例:</strong> <%= genre.additional_info %></p>
+        </div>
+      <% end %>
+    </div>
   <% end %>
-<% end %>
+</div>
+
+<!-- ホバー時に影を付ける -->
+<style>
+  .genre-card-hover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    transform: translateY(-3px);
+    transition: all 0.2s ease-in-out;
+  }
+</style>
