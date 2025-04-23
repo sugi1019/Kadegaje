@@ -1,28 +1,54 @@
-<% if user_signed_in? %>
-  <h2>こんにちは、<%= current_user.display_name %>さん！</h2>
-<% end %>
-<h1>ようこそカデガジェへ！</h1>
-<p>カデガジェは、家電やガジェットの実際の使用感を自由にレビューできるサイトです。</p>
-<p>アカウント登録していない方でも、他のユーザーのレビューを閲覧することができます。</p>
-<p>レビューやコメントを投稿するには、簡単なアカウント登録が必要です。</p>
 
-
-<!-- ジャンル一覧 bootstrapのカードの予定 シンプルにしたい -->
-<%= link_to "ALLジャンル", reviews_path %>
-<% @genres.each do |genre| %>
-  <!-- リンクをパラメーター付きで作成 -->
-  <%= link_to reviews_path(genre_id: genre.id) do %>
-    <%= genre.name %><br>
-    <%= genre.additional_info %><br>
-    <%= image_tag genre.genres_image.variant(resize: "70x70").processed %>
+<div class="container mt-5 ">
+  <% if user_signed_in? %>
+    <h2 class="text-center">こんにちは、<%= current_user.display_name %>さん！</h2>
   <% end %>
-  <br>
-<% end %>
 
-<p>ご利用にあたって：</p>
-<ul>
-  <li>過激な表現や誹謗中傷、関係のない内容の投稿はお控えください。</li>
-  <li>他者の著作権を尊重し、無断で公式名を名乗ることや、他者のコンテンツを無断転載しないでください。</li>
-  <li>レビューはあなた自身の体験に基づいたものを投稿してください。</li>
-</ul>
+  <h1 class="text-center mb-4">ようこそカデガジェへ！</h1>
+  <p class="lead text-center">カデガジェは、家電やガジェットの実際の使用感を自由にレビューできるサイトです。</p>
+  <p class="text-center">アカウント登録していない方でも、他のユーザーのレビューを閲覧することができます。</p>
+  <p class="text-center mb-5">レビューやコメントを投稿するには、簡単なアカウント登録が必要です。</p>
 
+  <!-- ジャンル一覧 -->
+  <h3 class="mb-3">ジャンル一覧</h3>
+  <div class="mb-3">
+    <%= link_to "ALLジャンル", reviews_path, class: "btn btn-outline-primary" %>
+  </div>
+
+  <div class="row">
+    <% @genres.each do |genre| %>
+      <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+        <%= link_to reviews_path(genre_id: genre.id), class: "text-decoration-none text-dark" do %>
+          <div class="card h-100 text-center shadow-sm genre-card-hover">
+            <% if genre.genres_image.attached? %>
+              <%= image_tag genre.genres_image.variant(resize: "100x100").processed, class: "card-img-top mx-auto mt-3", style: "width: 70px; height: 70px;" %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= genre.name %></h5>
+              <p class="card-text"><%= genre.additional_info %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- 利用上の注意 -->
+  <div class="mt-5">
+    <h4>ご利用にあたって：</h4>
+    <ul class="list-group">
+      <li class="list-group-item">過激な表現や誹謗中傷、関係のない内容の投稿はお控えください。</li>
+      <li class="list-group-item">他者の著作権を尊重し、無断で公式名を名乗ることや、他者のコンテンツを無断転載しないでください。</li>
+      <li class="list-group-item">レビューはあなた自身の体験に基づいたものを投稿してください。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ホバー時に影を付ける -->
+<style>
+  .genre-card-hover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+    transform: translateY(-3px);
+    transition: all 0.2s ease-in-out;
+  }
+</style>
