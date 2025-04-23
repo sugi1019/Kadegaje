@@ -1,49 +1,38 @@
-<!-- マイページ -->
-<% if @user == current_user %>
-  <h1>マイページ</h1>
+<div class="container mt-5">
+  <% if @user == current_user %>
+    <h1 class="mb-4">マイページ</h1>
+  <% else %>
+    <h2 class="mb-4"><%= @user.display_name %>さんのアカウント情報</h2>
+  <% end %>
 
   <!-- ユーザー情報 -->
-  <%= image_tag @user.users_image.variant(resize: "200x200").processed %>
-  <p>表示名: <%= @user.display_name %></p>
+  <div class="text-center mb-4">
+    <%= image_tag @user.users_image.variant(resize: "200x200").processed, class: "rounded-circle shadow-sm mb-2" %>
+    <h5>表示名: <%= @user.display_name %></h5>
 
-  <!-- ゲストユーザーではない場合 ユーザー情報編集ページへ -->
-  <% unless @user.guest? %>
-    <%= link_to "編集する", edit_user_path(current_user.id) %>
-  <% end %>
+    <!-- ゲストユーザーではない場合編集ボタンを表示 -->
+    <% if @user == current_user && !@user.guest? %>
+      <%= link_to "編集する", edit_user_path(current_user.id), class: "btn btn-outline-primary mt-2" %>
+    <% end %>
+  </div>
 
-  <h2>レビュー一覧</h2>
-
-  <% @user.reviews.each do |review| %>
-    <p>タイトル: 
-      <%= link_to review_path(review.id) do %>
-        <%= review.title %>
-      <% end %>
-    </p>
-    <p>✩: <%= review.rating %></p>
-    <p>レビュー: <%= review.post %></p>
-    <p>製品: <%= review.product_name %></p>
-    <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
-  <% end %>
-
-<!-- 他ユーザーページ -->
-<% else %>
-  <h2><%= @user.display_name %>さんの詳細ページ</h2>
-
-  <!-- ユーザー情報 -->
-  <%= image_tag @user.users_image.variant(resize: "200x200").processed %>
-  <p>表示名: <%= @user.display_name %></p>
-
-  <h2>レビュー一覧</h2>
+  <!-- レビュー一覧 -->
+  <h2 class="mb-3"><%= @user.display_name %>さんのレビュー一覧</h2>
 
   <% @user.reviews.each do |review| %>
-    <p>タイトル: 
-      <%= link_to review_path(review.id) do %>
-        <%= review.title %>
+    <div class="mb-4 border-bottom pb-3">
+      <h5 class="text-primary">
+        <%= link_to review.title, review_path(review), class: "text-decoration-none" %>
+      </h5>
+
+      <p class="mb-1"><strong>評価:</strong> ✩ <%= review.rating %></p>
+      <p class="mb-1"><strong>レビュー内容:</strong> <%= review.post %></p>
+      <p class="mb-1"><strong>製品名:</strong> <%= review.product_name %></p>
+      <% if review.reviews_image.attached? %>
+        <div>
+          <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-fluid rounded shadow-sm" %>
+        </div>
       <% end %>
-    </p>
-    <p>✩: <%= review.rating %></p>
-    <p>レビュー: <%= review.post %></p>
-    <p>製品: <%= review.product_name %></p>
-    <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
+    </div>
   <% end %>
-<% end %>
+</div>
