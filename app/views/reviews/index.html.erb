@@ -44,30 +44,48 @@
 <% end %>
 
 <% @reviews.each do |review| %>
-  <!-- タイトル (レビュー詳細へリンク) -->
-  <p>タイトル: 
-    <%= link_to review_path(review.id) do %>
-      <%= review.title %>
-    <% end %>
-  </p>
+  <div class="mb-4 p-3 border rounded d-flex">
+    <!-- 投稿者アイコン（左上に表示、丸く） -->
+    <div class="me-3">
+      <%= image_tag review.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle" %>
+    </div>
 
-  <p>✩: <%= review.rating %></p>
+    <!-- 投稿内容 -->
+    <div>
+      <!-- 投稿者名 -->
+      <p class="mb-1">
+        <%= link_to user_path(review.user.id) do %>
+          <%= review.user.display_name %>
+        <% end %>
+      </p>
 
-  <p>製品: <%= review.product_name %></p>
+      <!-- 製品名 -->
+      <p class="mb-1"><%= review.product_name %></p>
 
-  <!-- 製品画像 -->
-  <% if review.reviews_image.attached? %>
-    <p>製品画像 <%= image_tag review.reviews_image.variant(resize: "70x70").processed %></p>
-  <% else %>
-    <p>画像がありません… <%= image_tag "no_image_review.jpg", size: "70x70" %></p>
-  <% end %> 
+      <!-- ✩評価 -->
+      <p class="mb-1">✩: <%= review.rating %></p>
 
-  <!-- 投稿者名 (ユーザー詳細へリンク) -->
-  <p>投稿者: 
-    <%= link_to user_path(review.user.id) do %>
-      <%= review.user.display_name %>
-    <% end %>
-  </p>
+      <!-- タイトル -->
+      <p class="mb-1">
+        <%= link_to review_path(review.id) do %>
+          <%= review.title %>
+        <% end %>
+      </p>
+
+      <!-- 製品画像 -->
+      <p class="mb-0">
+        <% if review.reviews_image.attached? %>
+          <%= image_tag review.reviews_image.variant(resize: "70x70").processed %>
+        <% else %>
+          <%= image_tag "no_image_review.jpg", size: "70x70" %>
+        <% end %>
+      </p>
+
+      <!-- コメント数 -->
+      <p class="mt-2">コメント数: <%= review.comments.count %></p>
+
+    </div>
+  </div>
 <% end %>
 
 <!-- ページネーション -->
