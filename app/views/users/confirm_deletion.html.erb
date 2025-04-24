@@ -1,10 +1,14 @@
-<h1>本当にアカウントを削除しますか？</h1>
-<p>アカウントを削除すると、これまでに投稿したレビューやコメントはすべて削除されます。</p>
-<p>※ 一度削除すると、元に戻すことはできません。</p>
-<p>本当に削除してもよろしいですか？</p>
+<div class="container mt-5">
+  <h1 class="mb-4">本当にアカウントを削除しますか？</h1>
+  <p>アカウントを削除すると、これまでに投稿したレビューやコメントはすべて削除されます。</p>
+  <p><strong>※ 一度削除すると、元に戻すことはできません。</strong></p>
+  <p>本当に削除してもよろしいですか？</p>
 
-<!-- 削除しないボタン -->
-<%= link_to "編集画面へ戻る", edit_user_path(@user.id) %>
+  <div class="mt-4">
+    <!-- 削除しないボタン（大きく） -->
+    <%= link_to "編集画面へ戻る", edit_user_path(@user.id), class: "btn btn-outline-secondary btn-lg mr-3" %>
 
-<!-- 削除ボタン -->
-<%= link_to "削除する", user_path(@user.id), method: :delete %>
+    <!-- 削除ボタン -->
+    <%= link_to "削除する", user_path(@user.id), method: :delete, data: { confirm: "本当にアカウントを削除しますか？削除後は元に戻せません。" }, class: "btn btn-outline-danger" %>
+  </div>
+</div>

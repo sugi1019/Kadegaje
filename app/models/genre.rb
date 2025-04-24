@@ -9,4 +9,15 @@ class Genre < ApplicationRecord
             :additional_info,
             :genres_image,
             presence: true
- end
+
+
+  # Ransackの検索許可
+  def self.ransackable_attributes(auth_object = nil)
+    ["name"] 
+  end
+
+  # Ransackのアソシエーション
+  def self.ransackable_associations(auth_object = nil)
+    ["reviews"]
+  end
+end

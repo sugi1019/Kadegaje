@@ -1,54 +1,53 @@
+<!-- Ransack 検索用 -->
+<%= search_form_for @q, url: admin_reviews_path, method: :get, html: { class: "search-form shadow-sm p-3 mb-5 rounded border-primary" } do |f| %>
+  <div class="form-row align-items-end">
+    <!-- 投稿者検索 -->
+    <div class="col-md-3">
+      <%= f.label :user_display_name_cont, "投稿者検索", class: "form-label text-primary" %>
+      <%= f.search_field :user_display_name_cont, class: "form-control", placeholder: "投稿者名で検索" %>
+    </div>
+
+    <!-- 製品名検索 -->
+    <div class="col-md-3">
+      <%= f.label :product_name_cont, "製品名検索", class: "form-label text-warning" %>
+      <%= f.search_field :product_name_cont, class: "form-control", placeholder: "製品名で検索" %>
+    </div>
+
+    <!-- 評価 -->
+    <div class="col-md-2">
+      <%= f.label :rating_eq, "✩評価", class: "form-label text-info" %>
+      <%= f.select :rating_eq, options_for_select([["すべて", ""]] + [5, 4, 3, 2, 1], @q.rating_eq), {}, class: "form-control" %>
+    </div>
+
+    <!-- 検索ボタン -->
+    <div class="col-md-2 d-flex align-items-end">
+      <%= f.submit "検索実行", class: "btn btn-success w-100" %>
+    </div>
+  </div>
+<% end %>
+
 <h1>管理者用レビュー一覧</h1>
 
-<%= link_to "トップに戻る", admin_root_path %>
-
-  <!-- Ransack 検索用 -->
-  <%= search_form_for @q, url: admin_reviews_path, method: :get do |f| %>
-    <div>
-      <%= f.label :user_display_name_cont, "投稿者検索" %>
-      <%= f.search_field :user_display_name_cont %>
-    </div>
-
-    <div>
-      <%= f.label :product_name_cont, "製品名検索" %>
-      <%= f.search_field :product_name_cont %>
-    </div>
-
-    <div>
-      <%= f.label :rating_eq, "✩" %>
-      <!-- ["すべて", ""] で空欄を選択できるようにしてる -->
-      <%= f.select :rating_eq, options_for_select([["すべて", ""], 5, 4, 3, 2, 1]) %>
-    </div>
-
-    <div>
-      <%= f.submit "検索実行" %>
-    </div>
-  <% end %>
+<%= link_to "トップに戻る", admin_root_path, class: "btn btn-primary mb-3" %>
 
 <!-- レビュー 一覧表示 -->
 <% @reviews.each do |review| %>
-  <!-- タイトル -->
-  <p>タイトル: <%= review.title %></p>
+  <div class="review-card mb-3 p-3 border rounded">
+    <p><strong>タイトル:</strong> <%= review.title %></p>
+    <p><strong>評価 (✩):</strong> <%= review.rating %></p>
+    <p><strong>製品名:</strong> <%= review.product_name %></p>
+    <p><strong>本文:</strong> <%= review.post.truncate(100) %></p>
 
-  <p>✩: <%= review.rating %></p>
+    <!-- 製品画像 -->
+    <p><strong>製品画像:</strong> <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-thumbnail" %></p>
 
-  <p>製品: <%= review.product_name %></p>
+    <!-- 投稿者情報 -->
+    <p><strong>投稿者:</strong> <%= review.user.display_name %></p>
+    <p><strong>メールアドレス:</strong> <%= review.user.email %></p>
 
-  <p>本文: <%= review.post %></p>
-
-  <!-- 製品画像 -->
-  <% if review.reviews_image.attached? %>
-    <p>製品画像 <%= image_tag review.reviews_image.variant(resize: "70x70").processed %></p>
-  <% else %>
-    <p>画像がありません… <%= image_tag "no_image_review.jpg", size: "70x70" %></p>
-  <% end %> 
-
-  <!-- 投稿者名 -->
-  <p>投稿者: <%= review.user.display_name %></p>
-
-  <!-- 投稿者メールアドレス -->
-  <p>メールアドレス: <%= review.user.email %></p>
-
-  <!-- レビュー削除ボタン -->
-  <%= link_to "このレビューを削除する", review_path(review.id), method: :delete , data: { confirm: "本当に削除しますか？" } %>
+    <!-- 削除ボタン -->
+    <div>
+      <%= link_to "このレビューを削除する", review_path(review.id), method: :delete, class: "btn btn-danger", data: { confirm: "本当に削除しますか？" } %>
+    </div>
+  </div>
 <% end %>

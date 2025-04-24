@@ -1,33 +1,38 @@
-<h1>ジャンル編集</h1>
+<h1 class="text-center mb-4">ジャンル編集</h1>
 
 <!-- エラーメッセージ表示 -->
 <%= render "layouts/errors", errors_message: @genre %>
 
+<%= link_to "新規ジャンル登録ページへ戻る", new_admin_genre_path, class: "btn btn-outline-secondary mb-4" %>
 
-<%= link_to "新規ジャンル登録ページへ戻る", new_admin_genre_path %>
-
-<p>
-<b>注意！</b><br>
-ジャンルの削除・編集は慎重に行ってください。<br>
-ジャンルを削除すると、現在そのジャンルに紐づいているユーザーのレビューも削除されてしまいます。<br>
-また、ジャンル名を変更すると、ユーザーが投稿したレビューのジャンル表記と実際の内容が一致しなくなるおそれがあります。<br>
-ユーザー体験を著しく損なう可能性がありますので、十分ご注意ください。
+<p class="alert alert-warning">
+  <b>注意！</b><br>
+  ジャンルの削除・編集は慎重に行ってください。<br>
+  ジャンルを削除すると、現在そのジャンルに紐づいているユーザーのレビューも削除されてしまいます。<br>
+  また、ジャンル名を変更すると、ユーザーが投稿したレビューのジャンル表記と実際の内容が一致しなくなるおそれがあります。<br>
+  ユーザー体験を著しく損なう可能性がありますので、十分ご注意ください。
 </p>
 
-
-<!-- ジャンル編集フォーム ネームスペース使用してるのでurlを指定 -->
+<!-- ジャンル編集フォーム -->
 <%= form_with model: @genre, url: admin_genre_path(@genre), method: :patch, local: true do |f| %>
-  <label>ジャンル名</label>
-  <%= f.text_field :name %>
+  <div class="mb-3">
+    <%= f.label :name, "ジャンル名", class: "form-label fw-bold" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
 
-  <label>ジャンル補足説明(製品例: ドライヤー・キーボードなど)</label>
-  <%= f.text_field :additional_info %>
+  <div class="mb-3">
+    <%= f.label :additional_info, "ジャンル補足説明(製品例: ドライヤー・キーボードなど)", class: "form-label fw-bold" %>
+    <%= f.text_field :additional_info, class: "form-control" %>
+  </div>
 
-  <label>ジャンルアイコン(アイコンは必須です)</label>
-  <%= f.file_field :genres_image, accept: "image/jpeg,image/png" %>
-   <p>※ 現在のアイコンを使用する場合は、このままでOKです。</p>
+  <div class="mb-3">
+    <%= f.label :genres_image, "ジャンルアイコン (アイコンは必須です)", class: "form-label fw-bold" %>
+    <%= f.file_field :genres_image, accept: "image/jpeg,image/png", class: "form-control-file w-auto" %>
+    <p class="mt-2 text-muted">※ 現在のアイコンを使用する場合は、このままでOKです。</p>
+  </div>
 
-  <%= f.submit "編集を保存する" %>
+  <div class="d-flex justify-content-between">
+    <%= f.submit "編集を保存する", class: "btn btn-primary" %>
+    <%= link_to "ジャンルを削除する", admin_genre_path(@genre), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: "btn btn-danger" %>
+  </div>
 <% end %>
-
-<%= link_to "ジャンルを削除する", admin_genre_path(@genre), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } %>
