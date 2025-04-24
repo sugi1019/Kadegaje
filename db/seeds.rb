@@ -9,8 +9,9 @@
 # テスト用データ
 
 # 管理者アカウント
+# パスワードはルートディレクトリに".env"ファイルを作成して ADMIN_PASSWORD=xxx の形式で記述してください!!
 AdminUser.find_or_create_by!(email: "a@a") do |admin_user|
-  admin_user.password = "123456"
+  admin_user.password = ENV["ADMIN_PASSWORD"]
 end
 
 # ユーザー情報
@@ -156,7 +157,7 @@ end
 # ターミナル表示
 puts "admin_userアカウントの情報です"
 puts "email = a@a"
-puts "password = 123456"
+puts "password = #{ENV["ADMIN_PASSWORD"]}"
 puts "ユーザー1のアカウントの情報です"
 puts "email = a@a"
 puts "password = aaaaaa"
