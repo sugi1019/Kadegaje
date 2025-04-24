@@ -66,6 +66,9 @@ gem 'ransack'
 #ページネーション機能
 gem 'kaminari','~> 1.2.1'
 
+# 環境変数用Gem
+gem 'dotenv-rails'
+
 # MySQL利用用
 gem 'dotenv-rails'
 group :production do
