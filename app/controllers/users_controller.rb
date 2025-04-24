@@ -15,8 +15,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @reviews = @user.reviews.page(params[:page])
   end
-
+  
   def update 
     @user = current_user
     if @user.update(user_params)
