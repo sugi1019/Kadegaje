@@ -19,7 +19,7 @@
   <!-- レビュー一覧 -->
   <h2 class="mb-3"><%= @user.display_name %>さんのレビュー一覧</h2>
 
-  <% @user.reviews.each do |review| %>
+  <% @reviews.each do |review| %>
     <div class="mb-4 border-bottom pb-3">
       <h5 class="text-primary">
         <%= link_to review.title, review_path(review), class: "text-decoration-none" %>
@@ -31,8 +31,14 @@
 
       <div>
         <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-fluid rounded shadow-sm" %>
-        <p class="mt-2 mb-0"><strong>コメント数:</strong> <%= review.comments.count %></p>
+        <!-- コメントはアイコン使用 -->
+        <p class="mt-2 mb-0"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= review.comments.count %></p>
       </div>
     </div>
   <% end %>
+</div>
+
+<!-- ページネーション -->
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @reviews %>
 </div>

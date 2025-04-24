@@ -1,52 +1,83 @@
-<h1>レビュー詳細</h1>
+<div class="container mt-5">
+  <h1 class="mb-4">レビュー詳細</h1>
 
-<!-- 投稿主名 (ユーザー詳細へリンク) -->
-<p>制作者: 
-  <%= link_to user_path(@review.user.id) do %>
-    <%= @review.user.display_name %>
-  <% end %>
-</p>
+  <div class="d-flex justify-content-end mb-3">
+    <%= link_to "レビュー一覧へ", reviews_path, class: "btn btn-outline-secondary" %>
+  </div>
 
-<p>タイトル: <%= @review.title %></p>
 
-<p>✩: <%= @review.rating %></p>
+  <!-- 投稿主名 (ユーザー詳細へリンク) -->
+  <p>
+    <div class="d-flex align-items-center">
+      <%= image_tag @review.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle me-2" %>
+      <%= link_to user_path(@review.user.id) do %>
+        <%= @review.user.display_name %>
+      <% end %>
+    </div>
+  </p>
 
-<p>ジャンル: <%= @review.genre.name %></p>
+  <!-- タイトル -->
+  <p> <%= @review.title %></p>
 
-<p>製品名: <%= @review.product_name %></p>
+  <!-- 評価 -->
+  <p><strong>✩ 評価:</strong> <%= @review.rating %></p>
 
-<%= image_tag @review.reviews_image.variant(resize: "500x500").processed %>
+  <!-- ジャンル -->
+  <p><%= image_tag @review.genre.genres_image.variant(resize: "30x30").processed, class: "me-2" %><%= @review.genre.name %></p>
 
-<p>本文: <%= @review.post %></p>
+  <!-- 製品名 -->
+  <p>
+    <i class="fa-solid fa-circle-exclamation fa-sm" style="color: #63E6BE;"></i>
+    <%= @review.product_name %>
+  </p>
 
-<!-- コメント一覧 -->
-<div>
-  <% @review.comments.each do |comment| %>
-    <!-- コメントの表示名 コメント主のユーザー詳細へリンク -->
-    <%= link_to comment.user.display_name, user_path(comment.user) %>
-    <%= image_tag comment.user.users_image.variant(resize: "50x50").processed %><br>
-    <%= comment.post_comment %>
-    <!-- コメント削除 (コメントの作者自身のコメントのみ表示)-->
-    <% if comment.user == current_user %>
-      <!-- commentモデルはreviewモデルへネストされてるのでURLは以下になる
-      review_comment_path(@review.id, comment.id) で /reviews/:review_id/comments/:id に指定 -->
-      <%= link_to "コメントを削除", review_comment_path(@review.id, comment.id), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+  <!-- 本文 -->
+  <%= simple_format(@review.post) %>
+
+  <div class="my-3">
+    <%= image_tag @review.reviews_image.variant(resize: "500x500").processed, class: "img-fluid rounded" %>
+  </div>
+
+
+  <!-- コメント一覧 -->
+  <div class="mt-5">
+    <p class="mt-2"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= @review.comments.count %></p>
+    <% @review.comments.each do |comment| %>
+      <!-- コメントの表示名 コメント主のユーザー詳細へリンク -->
+      <div class="border rounded p-3 mb-3">
+        <%= image_tag comment.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle ms-2" %>
+        <%= link_to comment.user.display_name, user_path(comment.user), class: "fw-bold" %><br>
+        <p><%= comment.post_comment %></p>
+
+        <!-- コメント削除 (コメントの作者自身のコメントのみ表示) -->
+        <% if comment.user == current_user %>
+          <!-- commentモデルはreviewモデルへネストされてるのでURLは以下になる
+          review_comment_path(@review.id, comment.id) で /reviews/:review_id/comments/:id に指定 -->
+          <%= link_to "コメントを削除", review_comment_path(@review.id, comment.id),
+              method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
 
-  <!-- コメント投稿 commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
-  <% if current_user %>
-    <%= form_with model: [@review, Comment.new], local: true do |f| %>
-      <label>コメント作成欄</label>
-      <%= f.text_area :post_comment %>
-      <%= f.submit "送信" %>
+    <!-- コメント投稿 commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
+    <% if current_user %>
+      <%= form_with model: [@review, Comment.new], local: true do |f| %>
+        <div class="mt-4">
+          <label>コメント作成欄</label>
+          <%= f.text_area :post_comment, class: "form-control", rows: 3 %>
+        </div>
+        <div class="mt-2">
+          <%= f.submit "送信", class: "btn btn-success" %>
+        </div>
+      <% end %>
     <% end %>
+  </div>
+
+  <!-- 自身が投稿したレビューだった場合 編集ページへリンク -->
+  <% if current_user && @review.user_id == current_user.id %>
+    <div class="mt-4">
+      <%= link_to "編集する", edit_review_path(@review.id), class: "btn btn-outline-primary" %>
+    </div>
   <% end %>
- </div>
 
-<!-- 自身が投稿したレビューだった場合 編集ページへリンク -->
-<% if current_user && @review.user_id == current_user.id %>
-  <%= link_to "編集する", edit_review_path(@review.id) %>
-<% end %>
-
-<%= link_to "レビュー一覧へ", reviews_path %>
+</div>

@@ -1,39 +1,59 @@
-<h1>レビュー新規投稿</h1>
+<div class="container mt-5">
+  <h1 class="mb-4">レビュー新規投稿</h1>
 
-<!-- 警告表示 -->
-<h6>投稿する前に必ず以下の点を確認してください</h6>
-<ul>
-  <li>過激な表現や他のユーザーへの誹謗中傷は禁止です。</li>
-  <li>著作権を侵害する投稿は行わないでください。公式名や商標を無断で使用することはできません。</li>
-</ul>
-
-
-<!-- エラーメッセージ表示 -->
-<%= render "layouts/errors", errors_message: @review %>
+  <!-- フォームの上にレビュー一覧ボタンを配置 -->
+  <div class="d-flex justify-content-end mb-4">
+    <div>
+      <%= link_to "レビュー一覧に戻る", reviews_path, class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 
 
-<%= form_with model: @review, local: true do |f| %>
-  <label>タイトル</label>
-  <%= f.text_field :title %>
+  <!-- 警告表示 -->
+  <h6 class="alert alert-warning">投稿する前に必ず以下の点を確認してください</h6>
+  <ul>
+    <li>過激な表現や他のユーザーへの誹謗中傷は禁止です。</li>
+    <li>著作権を侵害する投稿は行わないでください。公式名や商標を無断で使用することはできません。</li>
+  </ul>
 
-  <label>✩</label>
-  <%= f.select :rating, [['5', 5], ['4', 4], ['3', 3], ['2', 2], ['1', 1]] %>
+  <!-- エラーメッセージ表示 -->
+  <%= render "layouts/errors", errors_message: @review %>
 
-  <label>ジャンル</label>
-  <!-- .mapでALLで配列を作成[表示する変数,送信する値]でgenre_idにidを保存  -->
-  <%= f.select :genre_id, Genre.all.map { |g| [g.name, g.id] }, prompt:"ジャンルを選択してください" %>
-  
-  <label>製品名</label>
-  <p>なるべく詳しくご記入いただくと、他のユーザーが参考にしやすくなります。（例：◯◯製xxxx）もし正確な名前が分からない場合は、メーカー名だけでも大丈夫です!</p>
-  <%= f.text_field :product_name %>
+  <%= form_with model: @review, local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
+    <div class="mb-3">
+      <%= f.label :title, "タイトル", class: "form-label" %>
+      <%= f.text_field :title, class: "form-control", required: true %>
+    </div>
 
-  <label>写真</label>
-  <%= f.file_field :reviews_image, accept: "image/jpeg,image/png" %>
+    <div class="mb-3">
+      <%= f.label :rating, "✩ 評価", class: "form-label" %>
+      <%= f.select :rating, [['5', 5], ['4', 4], ['3', 3], ['2', 2], ['1', 1]], { class: "form-select", required: true } %>
+    </div>
 
-  <label>レビュー文</label>
-  <%= f.text_area :post %>
+    <div class="mb-3">
+      <%= f.label :genre_id,"ジャンル", class: "form-label" %>
+      <!-- .mapでALLで配列を作成[表示する変数,送信する値]でgenre_idにidを保存  -->
+      <%= f.select :genre_id, Genre.all.map { |g| [g.name, g.id] }, { prompt: "ジャンルを選択してください(必須です)", class: "form-select", required: true } %>
+    </div>
 
-  <%= f.submit "投稿する" %>
-<% end %>
+    <div class="mb-3">
+      <%= f.label :product_name, "製品名", class: "form-label" %>
+      <p class="form-text">※ なるべく詳しくご記入いただくと、他のユーザーが参考にしやすくなります。（例：◯◯製xxxx）もし正確な名前が分からない場合は、メーカー名だけでも大丈夫です!</p>
+      <%= f.text_field :product_name, class: "form-control", required: true %>
+    </div>
 
-<%= link_to "レビュー一覧に戻る", reviews_path %>
+    <div class="mb-3">
+      <%= f.label :reviews_image, "写真", class: "form-label" %>
+      <%= f.file_field :reviews_image, accept: "image/jpeg,image/png", class: "form-control-file w-auto" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :post, "レビュー文", class: "form-label" %>
+      <%= f.text_area :post, class: "form-control", rows: 5, required: true %>
+    </div>
+
+    <div class="mb-3 text-center">
+      <%= f.submit "投稿する", class: "btn btn-primary btn-lg w-75" %>
+    </div>
+  <% end %>
+</div>

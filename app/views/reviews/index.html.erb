@@ -1,5 +1,5 @@
 <!-- Ransackの検索機能 -->
-<%= search_form_for @q, url: reviews_path, method: :get, html: { class: "search-form shadow-sm p-3 mb-5 rounded border-primary" } do |f| %>
+<%= search_form_for @q, url: reviews_path, method: :get, html: { class: "search-form shadow-sm p-3 mb-2 rounded border-primary" } do |f| %>
   <div class="form-row align-items-end">
     <!-- ジャンル選択 -->
     <div class="col-md-3">
@@ -35,7 +35,10 @@
 
 <!-- 新規レビュー作成へ (ログイン時のみ表示) -->
 <% if user_signed_in? %>
-  <%= link_to "新しいレビューを書く", new_review_path, class: "btn btn-primary btn-lg" %>
+  <div class="d-flex justify-content-end mb-3">
+
+  <%= link_to "新しいレビューを書く", new_review_path, class: "btn btn-primary btn-lg " %>
+  </div>
 <% end %>
 
 
@@ -65,7 +68,8 @@
                   <%= image_tag "no_image_review.jpg", size: "70x70" %>
                 <% end %>
               </p>
-              <p class="mt-2">コメント数: <%= review.comments.count %></p>
+              <!-- コメントはアイコン使用 -->
+              <p class="mt-2"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= review.comments.count %></p>
             </div>
           </div>
         <% end %>
@@ -75,14 +79,6 @@
 </div>
 
 <!-- ページネーション -->
-<%= paginate @reviews %>
-
-
-<!-- ホバー時に影を付ける -->
-<style>
-  .genre-card-hover:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
-    transform: translateY(-3px);
-    transition: all 0.2s ease-in-out;
-  }
-</style>
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @reviews %>
+</div>

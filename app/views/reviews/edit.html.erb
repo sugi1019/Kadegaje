@@ -1,29 +1,55 @@
-<h1>レビュー編集画面</h1>
+<div class="container mt-5">
+  <h1 class="mb-4">レビュー編集</h1>
 
-<!-- エラーメッセージ表示 -->
-<%= render "layouts/errors", errors_message: @review %>
+  <!-- フォームの上に戻るボタンを配置 -->
+  <div class="d-flex justify-content-end mb-4">
+    <div>
+      <%= link_to "レビュー詳細へ戻る", review_path(@review.id), class: "btn btn-outline-secondary" %>
+    </div>
+  </div>
 
+  <!-- 警告表示（必要であれば） -->
+  <h6 class="alert alert-warning">編集時も以下の点にご注意ください</h6>
+  <ul>
+    <li>過激な表現や他のユーザーへの誹謗中傷は禁止です。</li>
+    <li>著作権を侵害する投稿は行わないでください。</li>
+  </ul>
 
-<%= form_with model: @review, method: :patch, local: true do |f| %>
-  <label>タイトル</label>
-  <%= f.text_field :title %>
+  <!-- エラーメッセージ表示 -->
+  <%= render "layouts/errors", errors_message: @review %>
 
-  <label>ジャンル</label>
-  <%= f.select :genre_id, Genre.all.map { |g| [g.name, g.id] }, prompt:"ジャンルを選択してください" %>
+  <%= form_with model: @review, method: :patch, local: true, html: { class: "needs-validation", novalidate: true } do |f| %>
+    <div class="mb-3">
+      <%= f.label :title, "タイトル", class: "form-label" %>
+      <%= f.text_field :title, class: "form-control", required: true %>
+    </div>
 
-  <label>製品名</label>
-  <%= f.text_field :product_name %>
+    <div class="mb-3">
+      <%= f.label :genre_id, "ジャンル", class: "form-label" %>
+      <%= f.select :genre_id, Genre.all.map { |g| [g.name, g.id] }, { prompt: "ジャンルを選択してください" }, class: "form-select", required: true %>
+    </div>
 
-  <label>画像</label>
-  <%= f.file_field :reviews_image, accept: "image/jpeg,image/png" %>
+    <div class="mb-3">
+      <%= f.label :product_name, "製品名", class: "form-label" %>
+      <%= f.text_field :product_name, class: "form-control", required: true %>
+    </div>
 
-  <label>本文</label>
-  <%= f.text_area :post %>
+    <div class="mb-3">
+      <%= f.label :reviews_image, "写真", class: "form-label" %>
+      <%= f.file_field :reviews_image, accept: "image/jpeg,image/png", class: "form-control-file w-auto" %>
+    </div>
 
-  <%= f.submit "レビューを更新する" %>
+    <div class="mb-3">
+      <%= f.label :post, "レビュー文", class: "form-label" %>
+      <%= f.text_area :post, class: "form-control", rows: 5, required: true %>
+    </div>
 
-<% end %>
+    <div class="mb-3 text-center">
+      <%= f.submit "レビューを更新する", class: "btn btn-primary btn-lg w-75" %>
+    </div>
+  <% end %>
 
-<%= link_to "レビュー詳細へ戻る", review_path(@review.id) %>
-
-<%= link_to "レビューを削除する", review_path(@review.id), method: :delete, data: { confirm: "本当によろしいですか？"} %>
+  <div class="text-center mt-3">
+    <%= link_to "レビューを削除する", review_path(@review.id), method: :delete, data: { confirm: "本当によろしいですか？" }, class: "btn btn-danger" %>
+  </div>
+</div>
