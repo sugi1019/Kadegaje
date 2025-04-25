@@ -19,8 +19,8 @@
   <!-- タイトル -->
   <p> <%= @review.title %></p>
 
-  <!-- 評価 -->
-  <p><strong>✩ 評価:</strong> <%= @review.rating %></p>
+  <!-- raty星表示 -->
+  <div class="review-rating" data-score="<%= @review.rating %>"></div>
 
   <!-- ジャンル -->
   <p><%= image_tag @review.genre.genres_image.variant(resize: "30x30").processed, class: "me-2" %><%= @review.genre.name %></p>
@@ -81,3 +81,25 @@
   <% end %>
 
 </div>
+
+
+<!-- raty読み取り用 -->
+<script>
+  //'turbolinks:load', function()これがないとリロードしないと星が表示されない turbolinksの動作の影響
+  document.addEventListener('turbolinks:load', function () {
+    document.querySelectorAll('.review-rating').forEach(function(elem) {
+      const score = elem.dataset.score;
+      //elem.innerHTML = ""; これがないとページを読み込む度に星が増えていく
+      elem.innerHTML = '';
+      raty(elem, {
+        path: '/assets',
+        starOn: 'star-on.png',
+        starOff: 'star-off.png',
+        starHalf: 'star-half.png',
+        //読み取り専用
+        readOnly: true,
+        score: score || 0
+      });
+    });
+  });
+</script>

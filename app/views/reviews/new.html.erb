@@ -25,9 +25,11 @@
       <%= f.text_field :title, class: "form-control", required: true %>
     </div>
 
+    <!-- ratyで5段階星評価 -->
     <div class="mb-3">
-      <%= f.label :rating, "✩ 評価", class: "form-label" %>
-      <%= f.select :rating, [['5', 5], ['4', 4], ['3', 3], ['2', 2], ['1', 1]], { class: "form-select", required: true } %>
+      <%= f.label :rating, "評価", class: "form-label" %>
+      <div id="review_raty"></div>
+      <%= hidden_field_tag "review[rating]", nil, id: "review_rating" %>
     </div>
 
     <div class="mb-3">
@@ -57,3 +59,31 @@
     </div>
   <% end %>
 </div>
+
+<!-- raty用 -->
+<script>
+//'turbolinks:load', function()これがないとリロードしないと星が表示されない turbolinksの動作の影響
+document.addEventListener('turbolinks:load', function() {
+  const elem = document.querySelector('#review_raty');
+  if (elem) {
+    //elem.innerHTML = ""; これがないとページを読み込む度に星が増えていく
+    elem.innerHTML = "";
+    raty(elem, {
+      path: '/assets',
+      starOn: 'star-on.png',
+      starOff: 'star-off.png',
+      starHalf: 'star-half.png',
+      half: false,
+      //初期値を設定
+      score: 5,
+      click: function (score) {
+        document.querySelector('#review_rating').value = score;
+      }
+    });
+
+    // 初期値のhidden_fieldに5をセット
+    document.querySelector('#review_rating').value = 5;
+  }
+});
+
+</script>

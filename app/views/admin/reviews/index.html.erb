@@ -34,9 +34,11 @@
 <% @reviews.each do |review| %>
   <div class="review-card mb-3 p-3 border rounded">
     <p><strong>タイトル:</strong> <%= review.title %></p>
-    <p><strong>評価 (✩):</strong> <%= review.rating %></p>
+    <!-- raty星表示 -->
+    <div class="review-rating mb-3" data-score="<%= review.rating %>"></div>
     <p><strong>製品名:</strong> <%= review.product_name %></p>
     <p><strong>本文:</strong> <%= review.post.truncate(100) %></p>
+    <p><strong>コメント数:</strong><%= review.comments.count %></p>
 
     <!-- 製品画像 -->
     <p><strong>製品画像:</strong> <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-thumbnail" %></p>
@@ -51,3 +53,25 @@
     </div>
   </div>
 <% end %>
+
+
+<!-- raty読み取り用 -->
+<script>
+  //'turbolinks:load', function()これがないとリロードしないと星が表示されない turbolinksの動作の影響
+  document.addEventListener('turbolinks:load', function () {
+    document.querySelectorAll('.review-rating').forEach(function(elem) {
+      const score = elem.dataset.score;
+      //elem.innerHTML = ""; これがないとページを読み込む度に星が増えていく
+      elem.innerHTML = '';
+      raty(elem, {
+        path: '/assets',
+        starOn: 'star-on.png',
+        starOff: 'star-off.png',
+        starHalf: 'star-half.png',
+        //読み取り専用
+        readOnly: true,
+        score: score || 0
+      });
+    });
+  });
+</script>

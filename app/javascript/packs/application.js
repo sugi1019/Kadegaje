@@ -14,6 +14,14 @@ import "popper.js";
 import "bootstrap";
 import "../stylesheets/application"; 
 
+// raty用設定
+import Raty from "../lib/raty"
+window.raty = function(elem, opt) {
+  const raty = new Raty(elem, opt);
+  raty.init();
+  return raty;
+}
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
