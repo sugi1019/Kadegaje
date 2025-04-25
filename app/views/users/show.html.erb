@@ -25,7 +25,8 @@
         <%= link_to review.title, review_path(review), class: "text-decoration-none" %>
       </h5>
 
-      <p class="mb-1"><strong>評価:</strong> ✩ <%= review.rating %></p>
+      <!-- raty星表示 -->
+      <div class="review-rating" data-score="<%= review.rating %>"></div>
       <p class="mb-1"><strong>レビュー内容:</strong> <%= review.post %></p>
       <p class="mb-1"><strong>製品名:</strong> <%= review.product_name %></p>
 
@@ -42,3 +43,24 @@
 <div class="d-flex justify-content-center mt-4">
   <%= paginate @reviews %>
 </div>
+
+<!-- raty読み取り用 -->
+<script>
+  //'turbolinks:load', function()これがないとリロードしないと星が表示されない turbolinksの動作の影響
+  document.addEventListener('turbolinks:load', function () {
+    document.querySelectorAll('.review-rating').forEach(function(elem) {
+      const score = elem.dataset.score;
+      //elem.innerHTML = ""; これがないとページを読み込む度に星が増えていく
+      elem.innerHTML = '';
+      raty(elem, {
+        path: '/assets',
+        starOn: 'star-on.png',
+        starOff: 'star-off.png',
+        starHalf: 'star-half.png',
+        //読み取り専用
+        readOnly: true,
+        score: score || 0
+      });
+    });
+  });
+</script>

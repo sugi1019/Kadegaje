@@ -36,10 +36,10 @@
     <p class="mb-1"><strong>メールアドレス:</strong> <%= user.email %></p>
 
     <!-- レビュー数 -->
-    <p class="mb-1"><strong>レビュー数:</strong> <%= user.reviews.count %></p>
+    <p class="mb-1"><strong>レビューをした数:</strong> <%= user.reviews.count %></p>
 
     <!-- コメント数 -->
-    <p class="mb-3"><strong>コメント数:</strong> <%= user.comments.count %></p>
+    <p class="mb-3"><strong>コメントをした数:</strong> <%= user.comments.count %></p>
 
     <!-- 削除ボタン -->
     <%= link_to "ユーザーを削除する", user_path(user.id), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
