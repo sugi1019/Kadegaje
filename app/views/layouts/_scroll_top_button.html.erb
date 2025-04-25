@@ -1,0 +1,24 @@
+<!-- トップに戻るボタン -->
+<a href="#" id="scroll-top-btn" class="scroll-top-btn">
+  <i class="fa-solid fa-turn-up"></i>
+</a>
+<!-- JavaScript -->
+<script>
+  document.addEventListener('turbolinks:load', function () {
+    const backToTop = document.getElementById('scroll-top-btn');
+    if (!backToTop) return;
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 100) {
+        backToTop.style.display = 'block';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+
+    backToTop.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
