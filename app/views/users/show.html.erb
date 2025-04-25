@@ -44,6 +44,9 @@
   <%= paginate @reviews %>
 </div>
 
+<!-- トップに戻るボタン -->
+<%= render 'layouts/scroll_top_button' %>
+
 <!-- raty読み取り用 -->
 <script>
   //'turbolinks:load', function()これがないとリロードしないと星が表示されない turbolinksの動作の影響

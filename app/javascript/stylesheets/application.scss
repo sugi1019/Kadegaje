@@ -17,3 +17,29 @@ body {
 .navbar {
   background-color: rgb(235, 235, 250);
 }
+
+// スクロールボタン
+.scroll-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(99, 230, 190, 0.6);
+  color: white;
+  padding: 8px 0px 0px 14px;
+  //丸く
+  border-radius: 50%;
+  text-decoration: none;
+  display: none;
+  z-index: 999;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+// ホバーさせる
+.scroll-top-btn:hover {
+  //上に5px
+  transform: translateY(-5px);
+  background-color: rgb(99, 230, 190,);
+  color: white;
+}

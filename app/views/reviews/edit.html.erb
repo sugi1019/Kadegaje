@@ -53,3 +53,6 @@
     <%= link_to "レビューを削除する", review_path(@review.id), method: :delete, data: { confirm: "本当によろしいですか？" }, class: "btn btn-danger" %>
   </div>
 </div>
+
+<!-- トップに戻るボタン -->
+<%= render 'layouts/scroll_top_button' %>

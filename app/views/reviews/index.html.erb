@@ -41,8 +41,13 @@
   </div>
 <% end %>
 
-
-<h2>みんなのレビュー</h2>
+<!-- ジャンル検索した時のみxxジャンルのレビューと表示 -->
+<% if @q.genre_id_eq.present? %>
+  <% selected_genre = @genres.find { |g| g.id == @q.genre_id_eq.to_i } %>
+  <h2><%= selected_genre&.name %>ジャンルのレビュー</h2>
+<% else %>
+  <h2>すべてのレビュー</h2>
+<% end %>
 
 <div class="row px-4">
   <% @reviews.each do |review| %>
@@ -83,6 +88,9 @@
 <div class="d-flex justify-content-center mt-4">
   <%= paginate @reviews %>
 </div>
+
+<!-- トップに戻るボタン -->
+<%= render 'layouts/scroll_top_button' %>
 
 <!-- raty読み取り用 -->
 <script>
