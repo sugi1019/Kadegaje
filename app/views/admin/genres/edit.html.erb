@@ -3,7 +3,9 @@
 <!-- エラーメッセージ表示 -->
 <%= render "layouts/errors", errors_message: @genre %>
 
-<%= link_to "新規ジャンル登録ページへ戻る", new_admin_genre_path, class: "btn btn-outline-secondary mb-4" %>
+<div class="d-flex justify-content-end mb-3 mr-5">
+  <%= link_to "ジャンル登録へ戻る", new_admin_genre_path, class: "btn btn-outline-secondary mb-4" %>
+</div>
 
 <p class="alert alert-warning">
   <b>注意！</b><br>
