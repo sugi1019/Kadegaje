@@ -36,23 +36,24 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    # ゲストユーザーは削除できない
-    if current_user.guest?
-      flash[:notice] = "ゲストユーザーは削除できません"
-      # return を使ってその場でdestroyアクションの処理を終了させる
-      return redirect_to user_path(current_user)
-    end
-
-    # 管理者削除用
-    if admin_user_signed_in?
-      User.find(params[:id]).destroy
-      flash[:notice] = "ユーザーを削除しました"
-      redirect_to admin_users_path
-    # ユーザー自身削除用
-    elsif user_signed_in?
+    if user_signed_in?
+      # ゲストユーザーは削除できない
+      if current_user.guest?
+        flash[:notice] = "ゲストユーザーは削除できません"
+        # return を使ってその場でdestroyアクションの処理を終了させる
+        return redirect_to user_path(current_user)
+      end
+      # ユーザー自身削除用
       current_user.destroy
       flash[:notice] = "正常に削除されました"
       redirect_to root_path
+    # 管理者削除用
+    elsif admin_user_signed_in?
+      User.find(params[:id]).destroy
+      flash[:notice] = "ユーザーを削除しました"
+      redirect_to admin_users_path
+    else
+      redirect_to new_user_session_path
     end
   end
 
