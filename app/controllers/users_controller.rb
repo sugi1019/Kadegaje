@@ -89,10 +89,10 @@ class UsersController < ApplicationController
   # ログインしてるのがゲストユーザーならアクセスをブロック
   def ensure_guest_user
     # .guest?はuserモデルに記述してあるカスタムメソッド
-    if current_user.guest?
+    if current_user && current_user.guest?
       flash[:notice] = "ゲストユーザーのプロフィール編集への遷移は禁止されています。"
       redirect_to user_path(current_user)
     end
   end
-
+  
 end
