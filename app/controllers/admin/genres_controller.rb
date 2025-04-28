@@ -14,7 +14,9 @@ class Admin::GenresController < ApplicationController
 
   def create
     @genre = Genre.new(genre_params)
-
+    # renderエラー防止のため、@genresに値（全ジャンル）を代入しておく
+    @genres = Genre.all
+  
     if @genre.save
       flash[:notice] = "新しいジャンルが作成されました"
       redirect_to new_admin_genre_path
