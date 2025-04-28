@@ -48,5 +48,10 @@
   </div>
 <% end %>
 
+<!-- ページネーション -->
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @users %>
+</div>
+
 <!-- トップに戻るボタン -->
 <%= render 'layouts/scroll_top_button' %>
