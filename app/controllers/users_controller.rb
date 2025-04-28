@@ -10,7 +10,12 @@ class UsersController < ApplicationController
   ]
 
   def edit
+    # 他の人のURLで編集画面に推移するのをブロック
     @user = current_user
+    if params[:id].to_i != current_user.id
+      flash[:notice] = "他のユーザーの編集はできません"
+      redirect_to user_path(current_user)
+    end
   end
 
   def show
@@ -83,12 +88,11 @@ class UsersController < ApplicationController
 
   # ログインしてるのがゲストユーザーならアクセスをブロック
   def ensure_guest_user
-    @user = User.find(params[:id])
     # .guest?はuserモデルに記述してあるカスタムメソッド
-    if @user.guest?
+    if current_user.guest?
       flash[:notice] = "ゲストユーザーのプロフィール編集への遷移は禁止されています。"
       redirect_to user_path(current_user)
     end
   end
-  
+
 end
