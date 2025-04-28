@@ -42,12 +42,15 @@
 <% end %>
 
 <!-- ジャンル検索した時のみxxジャンルのレビューと表示 -->
-<% if @q.genre_id_eq.present? %>
-  <% selected_genre = @genres.find { |g| g.id == @q.genre_id_eq.to_i } %>
-  <h2><%= selected_genre&.name %>ジャンルのレビュー</h2>
+<% selected_genre = @genres.find { |g| g.id == (@q.genre_id_eq.presence || params[:genre_id]).to_i } %>
+
+<% if selected_genre.present? %>
+  <h2><%= selected_genre.name %>ジャンルのレビュー</h2>
 <% else %>
   <h2>すべてのレビュー</h2>
 <% end %>
+
+
 
 <div class="row px-4">
   <% @reviews.each do |review| %>
