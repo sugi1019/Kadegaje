@@ -56,10 +56,9 @@
       //elem.innerHTML = ""; これがないとページを読み込む度に星が増えていく
       elem.innerHTML = '';
       raty(elem, {
-        path: '/assets',
-        starOn: 'star-on.png',
-        starOff: 'star-off.png',
-        starHalf: 'star-half.png',
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
         //読み取り専用
         readOnly: true,
         score: score || 0
