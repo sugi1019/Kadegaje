@@ -79,6 +79,9 @@
 
 ## 設計資料
 
+### AWS設計図
+![AWS構成図](./app/assets/images/AWS構成図.jpg)
+
 ### ER図
 ![ER図](./app/assets/images/ER_ss.jpg)
 
