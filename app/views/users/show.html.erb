@@ -32,6 +32,8 @@
 
       <div>
         <%= image_tag review.reviews_image.variant(resize: "70x70").processed, class: "img-fluid rounded shadow-sm" %>
+        <!-- 投稿日 l メソッド使用 -->
+        <p>投稿日 <%= l review.created_at %></p>
         <!-- コメントはアイコン使用 -->
         <p class="mt-2 mb-0"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= review.comments.count %></p>
       </div>

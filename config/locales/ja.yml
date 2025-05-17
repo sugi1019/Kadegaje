@@ -29,3 +29,6 @@ ja:
   errors:
     messages:
       not_saved: "保存に失敗しました。再度お試しください。"
+  time:
+    formats:
+      default: "%y/%m/%d"

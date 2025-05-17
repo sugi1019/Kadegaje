@@ -17,7 +17,7 @@
   </p>
 
   <!-- タイトル -->
-  <p> <%= @review.title %></p>
+  <p><%= @review.title %></p>
 
   <!-- raty星表示 -->
   <div class="review-rating" data-score="<%= @review.rating %>"></div>
@@ -34,10 +34,13 @@
   <!-- 本文 -->
   <%= simple_format(@review.post) %>
 
+  <!-- 製品画像 -->
   <div class="my-3">
     <%= image_tag @review.reviews_image.variant(resize: "500x500").processed, class: "img-fluid rounded" %>
   </div>
 
+  <!-- 投稿日 l メソッド使用 -->
+  <p>投稿日 <%= l @review.created_at %></p>
 
   <!-- コメント一覧 -->
   <div class="mt-5">
@@ -48,6 +51,8 @@
         <%= image_tag comment.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle ms-2" %>
         <%= link_to comment.user.display_name, user_path(comment.user), class: "fw-bold" %><br>
         <p><%= comment.post_comment %></p>
+        <!-- コメント送信日 l メソッド使用 -->
+        <p>送信日 <%= l comment.created_at %></p>
 
         <!-- コメント削除 (コメントの作者自身のコメントのみ表示) -->
         <% if comment.user == current_user %>
