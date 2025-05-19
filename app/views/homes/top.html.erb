@@ -1,17 +1,27 @@
 
 <div class="container mt-5 ">
-  <% if user_signed_in? %>
-    <h2 class="text-center">こんにちは、<%= current_user.display_name %>さん！</h2>
-  <% end %>
 
-  <h1 class="text-center mb-4">ようこそカデガジェへ！</h1>
-  <p class="lead text-center">カデガジェは、家電やガジェットの実際の使用感を自由にレビューできるサイトです。</p>
-  <p class="text-center">アカウント登録していない方でも、他のユーザーのレビューを閲覧することができます。</p>
-  <p class="text-center mb-5">レビューやコメントを投稿するには、簡単なアカウント登録が必要です。</p>
+  <div style="background-image: url('<%= asset_path "top_image.jpeg" %>'); background-size: cover; background-position: center; height: 400px; position: relative; color: white;">
+    <!-- バックグラウンドイメージdivに対して半透明の黒いオーバーレイdivを作成 文字を読みやすくしてる -->
+    <div style="background-color: rgba(0, 0, 0, 0.5); position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+    <div style="position: relative; z-index: 1;" class="text-center p-5">
+      <% if user_signed_in? %>
+        <h2>こんにちは、<%= current_user.display_name %>さん！</h2>
+        <h1 class="mb-4">ようこそカデガジェへ！</h1>
+        <p>あなたが使ってみて「良かった製品」や「ちょっと残念だった点」など、気軽にレビューしてみましょう。</p>
+        <p>また、他のユーザーの投稿にコメントして、交流を楽しむこともできます。</p>
+      <%else%>
+        <h1 class="mb-4">ようこそカデガジェへ！</h1>
+        <p class="lead">カデガジェは、家電やガジェットの実際の使用感を自由にレビューできるサイトです。</p>
+        <p>アカウント登録していない方でも、他のユーザーのレビューを閲覧することができます。</p>
+        <p class="mb-5">レビューやコメントを投稿するには、簡単なアカウント登録が必要です。</p>
+      <% end %>
+    </div>
+  </div>  
 
   <!-- ジャンル一覧 -->
   <div class="text-center mb-4">
-    <h3 class="mb-3">ジャンル一覧</h3>
+    <h3 class="mb-3 mt-3">ジャンル一覧</h3>
     <%= link_to "ALLジャンル", reviews_path, class: "btn btn-outline-primary w-100" %>
   </div>
 
