@@ -20,7 +20,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @reviews = @user.reviews.page(params[:page])
+    # .order(created_at: :desc)で新しい順に並べ替える
+    @reviews = @user.reviews.order(created_at: :desc).page(params[:page])
   end
   
   def update 
