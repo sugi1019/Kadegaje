@@ -18,6 +18,14 @@ body {
   background-color: rgb(235, 235, 250);
 }
 
+// フラッシュメッセージ
+.flash-notice {
+  background-color: aquamarine;
+  line-height: normal;
+  padding: 30px 30px 30px 30px;
+  text-align: center;
+}
+
 // スクロールボタン
 .scroll-top-btn {
   position: fixed;
