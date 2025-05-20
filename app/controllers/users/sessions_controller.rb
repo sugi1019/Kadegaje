@@ -28,8 +28,13 @@ class Users::SessionsController < Devise::SessionsController
   # ゲストユーザー用
   def guest_sign_in
     user = User.guest
+    # ゲストログイン時ゲストユーザーのレビューをすべて削除
+    user.reviews.delete_all
     sign_in user
-    flash[:notice] = "ゲストユーザーでログインしました"
+    flash[:notice] = "このゲストアカウントは共有アカウントのため、他の方がログインすると投稿が削除されます。\n
+    ※ログインのたびに投稿は自動的に削除されますので、重要な内容は投稿しないでください。\n
+    なお、次回のゲストログインまでは投稿データが残り続け、正規ユーザーからも閲覧可能です。\n
+    投稿を削除したい場合は、再度ゲストログインしてください。"
     redirect_to root_path
   end
 

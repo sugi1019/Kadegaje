@@ -24,12 +24,12 @@ class User < ApplicationRecord
 
   # ゲストログイン用
   GUEST_USER_EMAIL = "guest@example.com"
-  # ゲストユーザーがなければ作成
+  # ゲストユーザーがなければ作成 self インスタンス生成なしでゲストユーザーを取得・作成するためのクラスメソッド
   def self.guest
     find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
       # SecureRandom.urlsafe_base64 で＋や／を含まない安全な乱数を作成
       user.password = SecureRandom.urlsafe_base64
-      user.display_name = "guest-user"
+      user.display_name = "ゲストユーザー"
     end
   end
   # ゲストユーザーを判断 (current_user.guest?)の様に使う
