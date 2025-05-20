@@ -45,7 +45,7 @@
   <!-- コメント一覧 -->
   <div class="mt-5">
     <p class="mt-2"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= @review.comments.count %></p>
-    <% @review.comments.each do |comment| %>
+    <% @comments.each do |comment| %>
       <!-- コメントの表示名 コメント主のユーザー詳細へリンク -->
       <div class="border rounded p-3 mb-3">
         <%= image_tag comment.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle ms-2" %>
