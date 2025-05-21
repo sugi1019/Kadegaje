@@ -24,6 +24,13 @@
       <%= f.text_field :title, class: "form-control", required: true %>
     </div>
 
+    <!-- ratyで5段階星評価 -->
+    <div class="mb-3">
+      <%= f.label :rating, "評価", class: "form-label" %>
+      <div id="review_raty"></div>
+      <%= f.hidden_field :rating, id: "review_rating" %>
+    </div>
+
     <div class="mb-3">
       <%= f.label :genre_id, "ジャンル", class: "form-label" %>
       <%= f.select :genre_id, Genre.all.map { |g| [g.name, g.id] }, { prompt: "ジャンルを選択してください" }, class: "form-select", required: true %>
@@ -56,3 +63,25 @@
 
 <!-- トップに戻るボタン -->
 <%= render 'layouts/scroll_top_button' %>
+
+<!-- raty 編集用 -->
+<script>
+  document.addEventListener('turbolinks:load', function () {
+    const elem = document.querySelector('#review_raty');
+    const hiddenRating = document.querySelector('#review_rating');
+    if (elem && hiddenRating) {
+      // 星の多重描画を防ぐ
+      elem.innerHTML = '';
+      raty(elem, {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        starHalf: "<%= asset_path('star-half.png') %>",
+        // 初期値としてhiddenフィールドの値を反映
+        score: hiddenRating.value || 0,
+        click: function (score) {
+          hiddenRating.value = score;
+        }
+      });
+    }
+  });
+</script>

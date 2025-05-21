@@ -42,6 +42,13 @@
   <!-- 投稿日 l メソッド使用 -->
   <p>投稿日 <%= l @review.created_at %></p>
 
+  <!-- 自身が投稿したレビューだった場合 編集ページへリンク -->
+  <% if current_user && @review.user_id == current_user.id %>
+    <div class="mt-4">
+      <%= link_to "レビューを編集する", edit_review_path(@review.id), class: "btn btn-outline-primary" %>
+    </div>
+  <% end %>
+
   <!-- コメント一覧 -->
   <div class="mt-5">
     <p class="mt-2"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= @review.comments.count %></p>
@@ -78,12 +85,6 @@
     <% end %>
   </div>
 
-  <!-- 自身が投稿したレビューだった場合 編集ページへリンク -->
-  <% if current_user && @review.user_id == current_user.id %>
-    <div class="mt-4">
-      <%= link_to "編集する", edit_review_path(@review.id), class: "btn btn-outline-primary" %>
-    </div>
-  <% end %>
 </div>
 
 <!-- トップに戻るボタン -->
