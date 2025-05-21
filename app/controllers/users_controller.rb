@@ -19,7 +19,16 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    # 存在しないIDを検索した時のエラー対策でfind_byを使用
+    @user = User.find_by(id: params[:id])
+    unless @user
+      flash[:notice] = "指定されたページは存在しません"
+      if current_user
+        redirect_to user_path(current_user.id) and return
+      end
+      # ログインしてないときはtopページへ
+      redirect_to root_path and return
+    end
     # .order(created_at: :desc)で新しい順に並べ替える
     @reviews = @user.reviews.order(created_at: :desc).page(params[:page])
   end
