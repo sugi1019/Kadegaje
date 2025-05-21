@@ -40,7 +40,7 @@
 
     <div class="mb-3">
       <%= f.label :product_name, "製品名", class: "form-label" %>
-      <p class="form-text">※ なるべく詳しくご記入いただくと、他のユーザーが参考にしやすくなります。（例：◯◯製xxxx）もし正確な名前が分からない場合は、メーカー名だけでも大丈夫です!</p>
+      <p class="form-text">※ なるべく詳しくご記入いただくと、他のユーザーが参考にしやすくなります。（例：◯◯製xxxx）もし正確な名前が分からない場合は、メーカー名だけでも構いません。</p>
       <%= f.text_field :product_name, class: "form-control", required: true %>
     </div>
 
@@ -60,7 +60,7 @@
   <% end %>
 </div>
 
-<!-- raty用 -->
+<!-- raty 新規作成用 -->
 <script>
 //'turbolinks:load', function()これがないとリロードしないと星が表示されない turbolinksの動作の影響
 document.addEventListener('turbolinks:load', function() {
@@ -68,10 +68,10 @@ document.addEventListener('turbolinks:load', function() {
   if (elem) {
     //elem.innerHTML = ""; これがないとページを読み込む度に星が増えていく
     elem.innerHTML = "";
-      raty(elem, {
-        starOn: "<%= asset_path('star-on.png') %>",
-        starOff: "<%= asset_path('star-off.png') %>",
-        starHalf: "<%= asset_path('star-half.png') %>",
+    raty(elem, {
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      starHalf: "<%= asset_path('star-half.png') %>",
       half: false,
       //初期値を設定
       score: 5,
@@ -84,5 +84,4 @@ document.addEventListener('turbolinks:load', function() {
     document.querySelector('#review_rating').value = 5;
   }
 });
-
 </script>
