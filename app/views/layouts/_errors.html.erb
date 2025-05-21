@@ -1,9 +1,11 @@
-<% if errors_message.errors.any? %>
-  <h2>以下のエラーが発生しました: </h2>
-  <ul>
-    <!-- uniqでエラーメッセージが重複した時1度のみ表示 -->
-    <% errors_message.errors.full_messages.uniq.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<div class="errors">
+  <% if errors_message.errors.any? %>
+    <h2>以下のエラーが発生しました: </h2>
+    <ul>
+      <!-- uniqでエラーメッセージが重複した時1度のみ表示 -->
+      <% errors_message.errors.full_messages.uniq.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

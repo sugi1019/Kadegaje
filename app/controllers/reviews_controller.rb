@@ -37,7 +37,7 @@ class ReviewsController < ApplicationController
     @review = Review.find_by(id: params[:id])
     # find_by で存在しない場合 nill になる unlessで存在しない場合の処理をする
     unless @review
-      flash[:notice] = "指定されたページは存在しません"
+      flash[:alert] = "指定されたページは存在しません"
       # and returnで処理を終了させる
       redirect_to reviews_path and return
     end
@@ -60,13 +60,13 @@ class ReviewsController < ApplicationController
     # find_byを使って存在しないURLを検索した時のエラー表示をさせないためのコード
     @review = Review.find_by(id: params[:id])
     unless @review
-      flash[:notice] = "指定されたページは存在しません"
+      flash[:alert] = "指定されたページは存在しません"
       # and returnで処理を終了させる
       redirect_to reviews_path and return
     end
 
     if @review.user_id != current_user.id
-      flash[:notice] = "他のユーザーのレビューの編集はできません"
+      flash[:alert] = "他のユーザーのレビューの編集はできません"
       redirect_to reviews_path
     end
   end

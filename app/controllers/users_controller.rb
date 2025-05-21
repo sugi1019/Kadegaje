@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     # 他の人のURLで編集画面に推移するのをブロック
     @user = current_user
     if params[:id].to_i != current_user.id
-      flash[:notice] = "他のユーザーの編集はできません"
+      flash[:alert] = "他のユーザーの編集はできません"
       redirect_to user_path(current_user)
     end
   end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     # 存在しないIDを検索した時のエラー対策でfind_byを使用
     @user = User.find_by(id: params[:id])
     unless @user
-      flash[:notice] = "指定されたページは存在しません"
+      flash[:alert] = "指定されたページは存在しません"
       if current_user
         redirect_to user_path(current_user.id) and return
       end
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     if user_signed_in?
       # ゲストユーザーは削除できない
       if current_user.guest?
-        flash[:notice] = "ゲストユーザーは削除できません"
+        flash[:alert] = "ゲストユーザーは削除できません"
         # return を使ってその場でdestroyアクションの処理を終了させる
         return redirect_to user_path(current_user)
       end
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
   def ensure_guest_user
     # .guest?はuserモデルに記述してあるカスタムメソッド
     if current_user && current_user.guest?
-      flash[:notice] = "ゲストユーザーのプロフィール編集への遷移は禁止されています。"
+      flash[:alert] = "ゲストユーザーのプロフィール編集への遷移は禁止されています。"
       redirect_to user_path(current_user)
     end
   end

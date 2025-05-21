@@ -25,11 +25,17 @@
       <%= render 'layouts/header' %>
     <% end %>
     <main>
-      <!-- フラッシュメッセージ(成功時) 失敗時はエラー文表示に設定-->
+      <!-- フラッシュメッセージ-->
       <% if flash[:notice] %>
         <div class="flash-notice">
           <!-- flashメッセージでも改行できるように変更 .gsubで改行文字"\n" を"<br>" へ置き換え.html_safe でそのままHTMLとして出力 -->
           <%= flash[:notice].gsub("\n", "<br>").html_safe %>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="flash-alert">
+          <!-- flashメッセージでも改行できるように変更 .gsubで改行文字"\n" を"<br>" へ置き換え.html_safe でそのままHTMLとして出力 -->
+          <%= flash[:alert].gsub("\n", "<br>").html_safe %>
         </div>
       <% end %>
       <%= yield %>

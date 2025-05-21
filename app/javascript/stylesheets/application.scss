@@ -26,6 +26,19 @@ body {
   text-align: center;
 }
 
+.flash-alert {
+  background-color: rgb(248, 214.6, 217.8);
+  line-height: normal;
+  padding: 30px 30px 30px 30px;
+  text-align: center;
+}
+
+// エラーメッセージ
+.errors {
+  background-color: rgb(248, 214.6, 217.8);
+  color: crimson;
+}
+
 // スクロールボタン
 .scroll-top-btn {
   position: fixed;
