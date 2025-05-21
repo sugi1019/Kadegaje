@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:notice] = "コメントしました"
     else
-      flash[:notice] = "コメントの空入力はできません"
+      flash[:alert] = "コメントの空投稿はできません"
     end
     redirect_to review_path(@review.id)
   end
