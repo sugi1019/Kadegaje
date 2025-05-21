@@ -8,15 +8,15 @@ class CommentsController < ApplicationController
   def create
     @review = Review.find(params[:review_id])
     # commentにuserを紐づけたいのでcreateではなくbuild+saveを使用
-    @comment = @review.comments.build(params_comment)
+    @comment = @review.comments.build(comment_params)
     @comment.user = current_user
 
     if @comment.save
       flash[:notice] = "コメントしました"
-      redirect_to review_path(@review.id)
     else
-      render "reviews/show"
+      flash[:notice] = "コメントの空入力はできません"
     end
+    redirect_to review_path(@review.id)
   end
 
   def destroy
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
 
   private
 
-  def params_comment
+  def comment_params
     params.require(:comment).permit(:post_comment)
   end
 end
