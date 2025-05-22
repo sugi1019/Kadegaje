@@ -327,6 +327,7 @@ end
 # ターミナル表示
 puts "admin_userアカウントの情報です"
 puts "email = a@a"
+# PF用アプリなので忘れないように残しておく 実運用ではセキュリティを考えて表示しないようにする
 puts "password = #{ENV["ADMIN_PASSWORD"]}"
 puts "ユーザー1のアカウントの情報です"
 puts "email = a@a"
