@@ -1,0 +1,3 @@
+// コメント一覧のみ更新させる
+$('#comments_group').html("<%= j(render 'reviews/comments', review: @review, comments: @review.comments.order(created_at: :desc)) %>");
+// フォームのテキストエリアを空にする記述 $('#comment_textarea').val(""); 今回は上記のコードによって更新されるので不要

@@ -1,0 +1,2 @@
+// コメント一覧のみ更新させる
+$('#comments_group').html("<%= j(render 'reviews/comments', review: @review, comments: @review.comments.order(created_at: :desc)) %>");
