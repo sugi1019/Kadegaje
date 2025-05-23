@@ -50,41 +50,7 @@
   <% end %>
 
   <!-- コメント一覧 -->
-  <div class="mt-5">
-    <p class="mt-2"><i class="fa-regular fa-comment-dots fa-bounce" style="color: #63E6BE;"></i> <%= @review.comments.count %></p>
-    <% @comments.each do |comment| %>
-      <!-- コメントの表示名 コメント主のユーザー詳細へリンク -->
-      <div class="border rounded p-3 mb-3">
-        <%= image_tag comment.user.users_image.variant(resize: "50x50").processed, class: "rounded-circle ms-2" %>
-        <%= link_to comment.user.display_name, user_path(comment.user), class: "fw-bold" %><br>
-        <p><%= comment.post_comment %></p>
-        <!-- コメント送信日 l メソッド使用 -->
-        <p>送信日 <%= l comment.created_at %></p>
-
-        <!-- コメント削除 (コメントの作者自身のコメントのみ表示) -->
-        <% if comment.user == current_user %>
-          <!-- commentモデルはreviewモデルへネストされてるのでURLは以下になる
-          review_comment_path(@review.id, comment.id) で /reviews/:review_id/comments/:id に指定 -->
-          <%= link_to "コメントを削除", review_comment_path(@review.id, comment.id),
-              method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
-        <% end %>
-      </div>
-    <% end %>
-
-    <!-- コメント投稿 commentモデルはreviewモデルへネストされてます model:[親model,子model]でパスを /reviews/:review_id/comments に指定 -->
-    <% if current_user %>
-      <%= form_with model: [@review, Comment.new], local: true do |f| %>
-        <div class="mt-4">
-          <label>コメント作成欄</label>
-          <%= f.text_area :post_comment, class: "form-control", rows: 3 %>
-        </div>
-        <div class="mt-2">
-          <%= f.submit "送信", class: "btn btn-success" %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-
+  <%= render "reviews/comments", {review: @review, comments: @comments} %>
 </div>
 
 <!-- トップに戻るボタン -->

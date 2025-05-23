@@ -10,13 +10,11 @@ class CommentsController < ApplicationController
     # commentにuserを紐づけたいのでcreateではなくbuild+saveを使用
     @comment = @review.comments.build(comment_params)
     @comment.user = current_user
-
-    if @comment.save
-      flash[:notice] = "コメントしました"
-    else
-      flash[:alert] = "コメントの空投稿はできません"
+    # コメントの空投稿時のみリダイレクトさせてフラッシュメッセージを表示させる
+    unless @comment.save
+      flash[:alert] = "コメントの空投稿はできません\n※コメント投稿のみ非同期処理しています\nこのメッセージを消したい場合はリロードして下さい"
+      redirect_to review_path(@review.id)
     end
-    redirect_to review_path(@review.id)
   end
 
   def destroy
@@ -25,8 +23,6 @@ class CommentsController < ApplicationController
     # 特定したレビューの中のどのコメントなのか特定
     @comment = @review.comments.find(params[:id])
     @comment.destroy
-    flash[:notice] = "コメントを削除しました"
-    redirect_to review_path(@review.id)
   end
 
   private
